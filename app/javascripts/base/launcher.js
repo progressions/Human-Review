@@ -61,37 +61,7 @@ YAHOO.launcher.launchActiveTab = function(view, title) {
 YAHOO.launcher.launchView = function(launch_view) {
   // get Yahoo! user's guid and ymail_wssid
   YAHOO.oib.getGuidAndYmailWssid(function(guid, ymail_wssid) {
-	 				
-    // call /ymdp/verify and return data about the user
-    YAHOO.oib.verifyUser(function(user) {
-
-      YAHOO.oib.login = user.login;
-	  
-  	  switch(user.state) {
-  	    case "scanning":
-  	      // formerly known as 'inspect'
-          YAHOO.launcher.launchScanning();
-          break;
-  	    case "summary":
-          YAHOO.launcher.launchSummary();
-          break;
-   	    case "authorized":
-  	      // authorized but not yet 'signed in'
-           YAHOO.oib.signInUser();
-           break;
-         case "new_active":
-           // no messages processed yet
-         case "processing":
-           // activated but we have synced fewer than 80% of their messages
-  	    case "active":
-  	      // active, launch the view this method was intended for
-  	      launch_view();
-  	      break;
-  	    default:
-  	      // other
-  	      YAHOO.launcher.launchAuthorize();
-  	  }
-    });
+    launch_view();
   });
 };
 
