@@ -1,0 +1,20 @@
+servers:
+  my:
+    server: my
+    application_id: 38eb260o66e9n
+    assets_id: 62dhh6thj8cb3_13
+
+  alpha:
+    server: alpha
+    application_id: 3ecj46gp32c36
+    assets_id: 38cpg6or3ee1j_1
+
+  staging:
+    server: staging
+    application_id: 3icpjckq3ic9k
+    assets_id: 6ap3470p30oj4_1
+  
+  qa:
+    server: qa
+    application_id: 36cr275ijad1p
+    assets_id: 6achk6hj30eb3_1

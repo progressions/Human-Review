@@ -1,0 +1,12 @@
+[load_paths]
+vendor/ymdp/**
+lib
+config
+
+[requires]
+
+[consts]
+APPLICATION_PATH=app
+CONFIG_PATH=config
+SERVERS_PATH=servers
+TMP_PATH=./tmp

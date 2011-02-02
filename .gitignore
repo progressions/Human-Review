@@ -1,0 +1,15 @@
+config/config.yml
+config/servers.yml
+config/environments/*
+servers/
+serers/*
+tmp/
+tmp/*
+git_pivot.state
+git_pivot.yml
+bin/*
+vendor/gems/*
+vendor/gems/cache/
+error.log
+vendor/*
+script/error.log

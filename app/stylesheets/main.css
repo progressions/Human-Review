@@ -1,0 +1,114 @@
+<%
+
+@theme_ids = {}
+
+THEMES.each do |k,v|
+  @theme_ids[k] = v.map do |t|
+    "##{t}"
+  end
+end
+
+%>
+
+
+/* 
+
+Main view styles 
+
+*/
+.thumbnails {
+  margin: 25px;
+  width: 500px;
+}
+
+.thumbnails .thumbnail {
+  background-image: url("<%= @assets_directory %>/images/thumbnails/featured_thumbnails.png");
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  height: 45px;
+  width: 90px;
+}
+.thumbnails .container {
+  float: left;
+  height: 95px;
+  width: 100px;
+}
+.thumbnails .container p {
+  margin-top: 2px;
+}
+.thumbnails .name {
+  color: #444;
+  font-size: 11px;
+}
+
+#none {
+  background-image: none;
+}
+
+.container.set_solid_colors {
+  height: 57px;
+}
+
+.outside {
+  border: 1px solid #ddd;
+  padding: 1px;
+  width: 90px;
+}
+.outside:hover {
+  box-shadow: 0 0 7px #835980;
+  -webkit-box-shadow: 0 0 7px #835980;
+  -moz-box-shadow: 0 0 7px #835980;
+}
+.thumbnail {
+  height: 45px;
+  width: 90px;
+}
+
+.themesets {
+  margin-bottom: 10px;
+}
+
+
+/* Theme CSS */
+
+<% THEMESETS.each do |set| %>
+
+  <%= @theme_ids[set].join(", ") %> {
+    background-image: url("<%= @assets_directory %>/images/thumbnails/<%= set %>_thumbnails.jpg");
+  }
+
+  <% @theme_ids[set].each_with_index do |theme, i| %>
+
+  <%= theme %> {
+    background-position: 0 -<%= i*50 %>px;
+  }
+
+  <% end %>
+
+<% end %>
+
+/* Solid Colors */
+
+<% SOLID_COLORS.each do |color| %>
+  .thumbnails .thumbnail<%= "#color_#{color}" %> {
+    background-color: <%= "##{color}" %>;
+    background-image: none;
+  }
+<% end %>
+
+#container_crowd_surfing,
+#container_party,
+#container_heart_bubbles,
+#container_birthday,
+#container_sitting,
+#container_fetch {
+  display: none;
+}
+
+#loading {
+  display: none;
+}
+
+select#set_selector {
+  margin-bottom: 5px;
+}

@@ -1,0 +1,40 @@
+!!!
+%html
+  %head
+    /
+      = "Sprint #{@version} #{@sprint_name}"
+      = "'#{@view}' view for #{@domain}: oib.me"
+      = "built at #{Time.now}"
+      = "commit #{@hash}, '#{@message}'"
+      
+    - test_for_required_variables
+
+    %title= "#{@view} view for #{@domain}: #{@server}.otherinbox.com"
+
+    = render :partial => 'stylesheets'
+    
+    / Prototype & Scriptaculous
+
+    <script src="/yahoo/mail/combo?javascripts/prototype.js&javascripts/scriptaculous.js" type="text/javascript"></script>
+    
+
+  %body{:class => @view}
+    = render :partial => 'loading'
+  
+    #main{:style => "display: none;"}
+
+      #content
+        = @content
+        
+    #upgrade{:style => "display: none;"}
+      = render :partial => 'upgrade'
+    
+    = render :partial => 'javascripts'
+
+    #fb-root
+    
+/
+  = "Sprint #{@version} #{@sprint_name}"
+  = "'#{@view}' view for #{@domain}: oib.me"
+  = "built at #{Time.now}"
+  = "commit #{@hash}, '#{@message}'"
