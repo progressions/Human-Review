@@ -34,7 +34,7 @@
 // 	// overwrite this function locally
 // };
 
-YAHOO.init.local = function() {
+YAHOO.init.startup = function() {
 	// put whatever you need in here
 	// make sure your final callback is the following:
 	//
