@@ -76,32 +76,11 @@ Debug = {
   
   alert: this.log,
   
-  ajaxError: function(message, path, params, response) {
-    var m;
-    m = message + " path: " + path + "?" + Object.toQueryString(params);
-    m = m + ", response: " + Object.toJSON(response);
-    
-    try {
-      $('error_details').update(m);
-    } catch(err) {
-      YAHOO.logger.error(err);
-    }
-    
-    this.error(m);
-    
-    if (Debug.ajaxErrorsOn()) {
-      alert(m);
-    }
-    if (Debug.logsOn()) {
-      YAHOO.logger.error(m);
-    }
-  },
-  
   message: function(message, obj) {
     try {
       message = this.timestamp() + " " + this.generalInfo() + " " + message;    
       if (obj) {
-        message = message + ", " + Object.toJSON(obj);
+        message = message + ", " + YAHOO.lang.JSON.stringify(obj);
       }
     } catch(e) {
       // alert(e);
@@ -120,14 +99,9 @@ Debug = {
     };
     
     time = new Date();
-    // year = time.getFullYear();
-    // month = time.getMonth() + 1;
-    // date = time.getDate();
     hour = checktime(time.getHours());
     minute = checktime(time.getMinutes());
     second = checktime(time.getSeconds());
-    
-    // timestamp = month + "/" + date + "/" + year + " " + 
     
     timestamp = hour + ":" + minute + ":" + second;
     

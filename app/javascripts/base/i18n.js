@@ -25,7 +25,7 @@ I18N = {
 I18n = {};
 
 I18n.init = function() {
-  Debug.log("about to call I18n.setResources");
+  Debug.log("about to call I18n.init");
 
   I18n.assets_path = "<%= @assets_path %>/yrb";
 
@@ -33,31 +33,33 @@ I18n.init = function() {
 
   I18n.currentLanguage = OpenMailIntl.findBestLanguage(I18n.availableLanguages);
   
-  I18n.addMethods();
-  
   I18n.setResources();
 
-  Debug.log("finished calling I18n.setResources");
+  Debug.log("finished calling I18n.init");
 };
 
-I18n.addMethods = function() {
-  Element.addMethods({
-    translate: function(element) {
-      element = $(element);
-      
-      var e;
-      e = element.inspect();
-      if (e.match(/<input/)) {
-        I18n.v(element.identify());
-      } else {
-        if (e.match(/<img/)) {
-          I18n.src(element.identify());
-        } else {
-    			I18n.u(element.identify());
-  			}
-			}
+I18n.Element = {
+  translate: function(element) {
+    var e, id;
+    
+    element = $(element);
+    
+    id = element.attr("id");
+    Debug.log("I18n.Element.translate", id);
+    
+    e = element.attr("tagName").toLowerCase();
+    
+    switch(e) {
+      case "input":
+        I18n.v(id);
+        break;
+      case "img":
+        I18n.src(id);
+        break;
+      default:
+        I18n.u(id);
     }
-  });  
+  }
 };
 
 I18n.setResources = function() {
@@ -65,19 +67,24 @@ I18n.setResources = function() {
   
   scope = "keys";
   
-  Debug.log("begin I18n.setResources for language " + I18n.currentLanguage);
+  Debug.log("begin I18n.setResources for language", I18n.currentLanguage);
   try {
 	  asset_path = "<%= @assets_directory %>/yrb/";
+	  
 		I18n[scope] = I18n[scope] || OpenMailIntl.getResources(asset_path, scope, I18n.currentLanguage);
+		
 	  if (I18n.currentLanguage !== "en-US") {
   		I18n.default_keys = OpenMailIntl.getResources(asset_path, scope, "en-US");
 		} else {
 		  I18n.default_keys = I18n[scope];
 		}
+		
 	} catch(err) {
 	  Debug.error("error in I18n.setResources: " + err);
 	}
 	I18n.scope = scope;
+	
+	Debug.log("end I18n.setResources");
 };
 
 I18n.english = function() {
@@ -126,19 +133,20 @@ I18n.translate_sentence = function(key, args) {
 // only updates the element if the translation is not blank
 //
 I18n.update = function(id, key, args) {
-  Try.these(function() {
+  Debug.log("I18n.update");
+  try {
     var message;
     message = I18n.t(key, args);
     if (message) {
-      $(id).update(message);
+      $("#" + id).html(message);
     }
-  }, function() {
-    Debug.error("Error in i18n.update: " + Object.toJSON({
+  } catch(err) {
+    Debug.error("Error in i18n.update: ", {
       id: id,
       key: key,
       args: args
-    }));
-  });
+    });
+  }
 };		
 
 // I18n.u(id, args)
@@ -149,22 +157,26 @@ I18n.update = function(id, key, args) {
 // within the local scope of the current view, and update the element with
 // that translation
 //
-I18n.u = function(id, args) {
-  Try.these(
-	function() {
-	  id.each(I18n.u);
-	},
-	function() {
+I18n.u = function(id, args) {  
+  Debug.log("typeof id === " + typeof id);
+  
+  if (typeof id === "string") {
     var key;
-    key = id.toUpperCase();
-    I18n.update(id, key, args);
-  },
-  function() {
-    Debug.error("Error in i18n.u: " + Object.toJSON({
-      id: id,
-      args: args
-    }));
-  });
+    
+    try {
+      key = id.toUpperCase();
+    
+      Debug.log("id", id);
+    
+      I18n.update(id, key, args);    
+    } catch(omg) {
+      Debug.error(omg);
+    }
+  } else {
+    $.each(id, function(i, element) {
+      I18n.u(element);
+    });
+  }
 };
 
 		
@@ -176,19 +188,19 @@ I18n.u = function(id, args) {
 // only updates the element if the translation is not blank
 //
 I18n.updateValue = function(id, key, args) {
-  Try.these(function() {
+  try {
     var message;
     message = I18n.t(key, args);
     if (message) {
       $(id).value = message;
-    }
-  }, function() {
-    Debug.error("Error in i18n.updateValue: " + Object.toJSON({
+    }    
+  } catch(a) {
+    Debug.error("Error in i18n.updateValue: ", {
       id: id,
       key: key,
       args: args
-    }));
-  });
+    });    
+  }
 };		
 
 		
@@ -200,22 +212,21 @@ I18n.updateValue = function(id, key, args) {
 // within the local scope of the current view, and update the element's value with
 // that translation
 //
-I18n.v = function(id, args) {
-  Try.these(
-	function() {
-		id.each(I18n.v);
-	},
-	function() {
-    var key;
-    key = id.toUpperCase();
-    I18n.updateValue(id, key, args);
-  },
-  function() {
-    Debug.error("Error in i18n.v: " + Object.toJSON({
-      id: id,
-      args: args
-    }));
-  });
+I18n.v = function(id, args) {  
+  try {
+  	id.each(I18n.v);
+  } catch(a) {
+    try {
+      var key;
+      key = id.toUpperCase();
+      I18n.updateValue(id, key, args);
+    } catch(b) {
+      Debug.error("Error in i18n.v: ", {
+        id: id,
+        args: args
+      });      
+    }
+  }
 };
 
 I18n.translateError = function() {
@@ -230,37 +241,45 @@ I18n.translateLoading = function() {
 };
 
 I18n.addLanguageToBody = function() {
-  Try.these(function() {
-    $$('body').first().addClassName(I18n.currentLanguage);
-  });
+  Debug.log("I18n.addLanguageToBody");
+  try {
+    $('body').addClass(I18n.currentLanguage);
+  } catch(a) {
+    Debug.error(a);
+  }
 };
 
 I18n.p = function(element) {
-  element = $(element);
   var key;
   
-  key = element.innerHTML;
+  element = $(element);
+  
+  key = element.html();
   
   I18n.update(element, key);
 };
 
 I18n.findAndTranslateAll = function() {
   Debug.log("I18n.findAndTranslateAll");
-	$$('.p').each(function(element) {
-	  try {
-	    I18n.p(element);
+  
+	$(".p").each(function(i, element) {
+    element = $(element);
+    try {
+      I18n.p(element);
     } catch(e) {
-      Debug.error("Translation error for element: " + e);
-    }
+      Debug.error("Translation error for element: ", e);
+    }      
 	});
-	
-	$$('.t').each(function(element) {
-	  try {
-     element.translate();
+
+  $(".t").each(function(i, element) {
+    element = $(element);
+    Debug.log("it worked", element.attr("id"));
+    try {
+      I18n.Element.translate(element);
     } catch(e) {
       Debug.error("Translation error for element: " + e);
     }
-	});	
+  });  
 	
 	Debug.log("End I18n.findAndTranslateAll");
 };

@@ -6,9 +6,6 @@ LOCAL NAMESPACES/CONSTANTS
 
 */
 
-// YAHOO.constants.base_url = "http://oib.me/";
-// YAHOO.constants.controller_url = "http://oib.me";
-
 YAHOO.oib.page_loaded = false;
 
 var View = {
@@ -17,5 +14,4 @@ var View = {
 
 YAHOO.namespace(View.name);
 
-document.observe("dom:loaded", YAHOO.oib.init);
-
+$(document).ready(YAHOO.oib.init);

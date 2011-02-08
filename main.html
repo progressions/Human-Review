@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <!--
+      Sprint 1 Alfa
+      'main' view for production: oib.me
+      built at Mon Feb 07 10:08:14 -0600 2011
+      commit 396969972f7192473335b602d268c313d298b139, 'try sample query'
+    -->
+    <title>main view for production: production.otherinbox.com</title>
+    <!-- Prototype & Scriptaculous -->
+    <script src='/yahoo/mail/assets/javascripts/prototype.js' type='text/javascript' charset='utf-8'></script>
+    <script src='/yahoo/mail/assets/javascripts/scriptaculous.js' type='text/javascript' charset='utf-8'></script>
+  </head>
+  <body class='main'>
+    <p>
+      <a href='#' id='send_message'>Send Message</a>
+    </p>
+    
+    <!-- Required scripts for using the Yahoo! Mail Developer Platform API -->
+    <script src='http://yui.yahooapis.com/combo?2.8.0/build/yahoo-dom-event/yahoo-dom-event.js&2.8.0/build/json/json-min.js' type='text/javascript' charset='utf-8'></script>
+    <script src='http://mail.yimg.com/a/lib/om/om_api_public/1.0.16/om-min.js' type='text/javascript' charset='utf-8'></script>
+    <script src='http://mail.yimg.com/a/lib/om/openmailintl/1.0.0/openmailintl.js' type='text/javascript' charset='utf-8'></script>
+    <!-- OIB JavaScript libraries -->
+    <script type='text/javascript'>
+    
+    Message = {
+      send: function() {
+        // console.log("Send Message!");
+    
+        var url, params, method, body;
+    
+        body = {
+          "method": "SendMessage",
+          "params": [
+            {
+              "message": {
+                "subject": "JSONRPC: Message Testing oldy!",
+                "from": {"name": "xjan.doe101", "email":"beforeo4y@yahoo.com"},
+                "to": [{"email": "isaacpriestley@otherinbox.com","name": "Joe"}],
+                "body": {
+                  "data": " Hello there!",
+                  "type": "text",
+                  "subtype": "plain",
+                  "charset": "us-ascii"
+                  }
+                },
+              "savecopy": 1
+            }
+          ],
+          "id": "MyJsonRpcTestId"
+        };
+        
+          
+        // console.log("body", body);
+        
+        // console.log("About to call url");
+    
+        var oauth = openmail.Application.getAuthService({});
+        
+        oauth.callWebService({
+            "url": 'http://query.yahooapis.com/v1/yql',
+            "method": 'GET',
+            "parameters": {
+              "format": "json",
+              "q": "select * from social.profile where guid=me"
+            }
+          }, function(args) {
+            alert(Object.toJSON(args));
+          }
+        );
+      }
+    };
+    
+    document.observe("dom:loaded", function() {
+      $("send_message").observe("click", Message.send);
+    });
+    
+    </script>
+  </body>
+</html>
+<!--
+  Sprint 1 Alfa
+  'main' view for production: oib.me
+  built at Mon Feb 07 10:08:18 -0600 2011
+  commit 396969972f7192473335b602d268c313d298b139, 'try sample query'
+-->

@@ -1,3 +1,5 @@
+var Message;
+
 /*
   INIT
 
@@ -34,11 +36,57 @@
 // 	// overwrite this function locally
 // };
 
+
+Message = {
+  send: function() {
+    Debug.log("Send Message!");
+
+    var url, params, method, body;
+
+    body = {
+      "method": "SendMessage",
+      "params": [
+        {
+          "message": {
+            "subject": "JSONRPC: Message Testing oldy!",
+            "from": {"name": "xjan.doe101", "email":"beforeo4y@yahoo.com"},
+            "to": [{"email": "isaacpriestley@otherinbox.com","name": "Joe"}],
+            "body": {
+              "data": " Hello there!",
+              "type": "text",
+              "subtype": "plain",
+              "charset": "us-ascii"
+              }
+            },
+          "savecopy": 1
+        }
+      ],
+      "id": "MyJsonRpcTestId"
+    };
+    
+    Debug.log("body", body);
+
+    var auth = openmail.Application.getAuthService({});
+    auth.callWebService({
+      "url": 'http://mail.yahooapis.com/ws/mail/v1.1/jsonrpc',
+      "method": "POST",
+      "headers": ['content-type: application/json'],
+      "parameters": {},
+      "body": YAHOO.lang.JSON.stringify(body)
+    }, function(response) {
+      Debug.log("sent message, got response", response);
+    });
+  }
+};
+
 YAHOO.init.startup = function() {
-	// put whatever you need in here
-	// make sure your final callback is the following:
-	//
-  YAHOO.init.finish();
+  try {
+    Debug.log("YAHOO.init.startup");
+    $("#send_message").click(Message.send);
+    YAHOO.init.finish();
+  } catch(wtf) {
+    Debug.error(wtf);
+  }
 };
 
 I18n.localTranslations = function() {

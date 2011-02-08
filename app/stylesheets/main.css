@@ -3,3 +3,35 @@
 Main view styles 
 
 */
+
+html, body {
+  color: #444;
+}
+
+#content {
+  margin: 20px;
+}
+p.terms {
+  margin: 20px;
+}
+
+#footer {
+  color: #aaa; 
+}
+
+#message_link {
+  text-align: center;
+  margin: 25px;
+}
+
+a#send_message {
+  background-color: #FCC530;
+  border: 1px solid #BD9E43;
+  color: black;
+  padding: 10px;
+  text-decoration: none;
+}
+a#send_message:hover,
+a#send_message:visited {
+  text-decoration: none;
+}

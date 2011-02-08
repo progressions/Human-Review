@@ -5,14 +5,9 @@
 = javascript_include "http://mail.yimg.com/a/lib/om/om_api_public/1.0.16/om-min.js"
 = javascript_include "http://mail.yimg.com/a/lib/om/openmailintl/1.0.0/openmailintl.js"
 
-/ OIB JavaScript libraries
+/ JavaScript libraries
 
-= render :javascript => ['base/application', 'base/debug', 'base/i18n', 'composer'], :filename => 'javascripts'
-
-/ Date
-/= javascript_include "date.js"
+= render :javascript => ['base/application', 'base/debug', 'base/i18n'], :filename => 'javascripts'
 
 / Header
 = render :javascript => ['header', @view]
-
-/ = include_firebug_lite
