@@ -1,16 +1,10 @@
-var Message;
+var Message, Status;
 
 /*
   INIT
 
   local to each view.  Launched automatically when the window is loaded.
 */
-
-// Adds behaviors/observers to elements on the page
-//
-// YAHOO.init.addBehaviors = function() {
-//	// overwrite this function locally
-// };
 
 // To be run before any other initializers have run.
 //
@@ -79,14 +73,51 @@ Message = {
   }
 };
 
+Status = {
+  // return true if the user has opted in, false if they've not or they have opted out
+  //
+  check: function(callback) {
+    Data.fetch(["HumanReview"], function(response) {
+      Debug.log("Status.check", response);
+      
+      callback();
+    });
+  },
+  
+  activate: function() {
+    Data.store({
+      "HumanReview": true
+    }, function() {
+      Debug.log("set HumanReview: true");
+    });
+  },
+  
+  deactivate: function() {
+    Data.store({
+      "HumanReview": false
+    }, function() {
+      Debug.log("set HumanReview: false");
+    });
+  }
+};
+
+
 YAHOO.init.startup = function() {
   try {
     Debug.log("YAHOO.init.startup");
-    $("#send_message").click(Message.send);
-    YAHOO.init.finish();
+    
+    Status.check(YAHOO.init.finish);
+    
+    // YAHOO.init.finish();
   } catch(wtf) {
     Debug.error(wtf);
   }
+};
+
+// Adds behaviors/observers to elements on the page
+//
+YAHOO.init.addBehaviors = function() {
+  $("#send_message").click(Message.send);
 };
 
 I18n.localTranslations = function() {

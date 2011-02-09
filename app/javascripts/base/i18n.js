@@ -133,7 +133,6 @@ I18n.translate_sentence = function(key, args) {
 // only updates the element if the translation is not blank
 //
 I18n.update = function(id, key, args) {
-  Debug.log("I18n.update");
   try {
     var message;
     message = I18n.t(key, args);
@@ -157,9 +156,7 @@ I18n.update = function(id, key, args) {
 // within the local scope of the current view, and update the element with
 // that translation
 //
-I18n.u = function(id, args) {  
-  Debug.log("typeof id === " + typeof id);
-  
+I18n.u = function(id, args) {
   if (typeof id === "string") {
     var key;
     
@@ -273,7 +270,6 @@ I18n.findAndTranslateAll = function() {
 
   $(".t").each(function(i, element) {
     element = $(element);
-    Debug.log("it worked", element.attr("id"));
     try {
       I18n.Element.translate(element);
     } catch(e) {
