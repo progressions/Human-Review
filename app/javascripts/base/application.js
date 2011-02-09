@@ -6,7 +6,7 @@
 
 */
 
-var Browser, Data, OIB;
+var Browser, OIB;
 
 /* 
 	GLOBAL CONSTANTS 
