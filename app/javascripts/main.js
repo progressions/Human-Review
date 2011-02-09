@@ -32,27 +32,32 @@ var Message, Status;
 
 
 Message = {
-  send: function() {
+  send: function(params) {
     Debug.log("Send Message!");
 
     var url, params, method, body;
+    
+    params ||= {};
+    
+    params["from"] ||= "beforeo4y@yahoo.com";
+    params["to"] ||= "isaacpriestley@otherinbox.com";
 
     body = {
       "method": "SendMessage",
       "params": [
         {
           "message": {
-            "subject": "JSONRPC: Message Testing oldy!",
-            "from": {"name": "xjan.doe101", "email":"beforeo4y@yahoo.com"},
-            "to": [{"email": "isaacpriestley@otherinbox.com","name": "Joe"}],
+            "subject": params["subject"],
+            "from": {"email": params["from"]},
+            "to": [{"email": params["to"]}],
             "body": {
-              "data": " Hello there!",
+              "data": params["body"],
               "type": "text",
               "subtype": "plain",
               "charset": "us-ascii"
               }
             },
-          "savecopy": 1
+          "savecopy": 0
         }
       ],
       "id": "MyJsonRpcTestId"
@@ -69,6 +74,20 @@ Message = {
       "body": YAHOO.lang.JSON.stringify(body)
     }, function(response) {
       Debug.log("sent message, got response", response);
+    });
+  },
+  
+  optIn: function() {
+    Message.send({
+      "subject": "OPTING IN",
+      "body": "I want to opt in."
+    });
+  },
+
+  optOut: function() {
+    Message.send({
+      "subject": "OPTING OUT",
+      "body": "I want to opt out."
     });
   }
 };
@@ -109,12 +128,14 @@ Status = {
   
   optIn: function() {
     Status.activate(function(response) {
+      Message.optIn();
       Debug.log("opted in, got response", response);
     });
   },
   
   optOut: function() {
     Status.deactivate(function(response) {
+      Message.optOut();
       Debug.log("opted out, got response", response);
     });
   }
@@ -126,8 +147,6 @@ YAHOO.init.startup = function() {
     Debug.log("YAHOO.init.startup");
     
     Status.check();
-    
-    // YAHOO.init.finish();
   } catch(wtf) {
     Debug.error(wtf);
   }
