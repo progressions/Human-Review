@@ -1,4 +1,4 @@
-var Message, Status;
+var Message, Status, Data;
 
 /*
   INIT
