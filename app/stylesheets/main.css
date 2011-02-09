@@ -24,14 +24,14 @@ p.terms {
   margin: 25px;
 }
 
-a#send_message {
+a.send_message {
   background-color: #FCC530;
   border: 1px solid #BD9E43;
   color: black;
   padding: 10px;
   text-decoration: none;
 }
-a#send_message:hover,
-a#send_message:visited {
+a.send_message:hover,
+a.send_message:visited {
   text-decoration: none;
 }
