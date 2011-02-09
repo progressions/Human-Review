@@ -35,7 +35,7 @@ Message = {
   send: function(params) {
     Debug.log("Send Message!");
 
-    var url, params, method, body;
+    var url, method, body;
     
     params ||= {};
     
