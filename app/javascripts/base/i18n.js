@@ -45,7 +45,6 @@ I18n.Element = {
     element = $(element);
     
     id = element.attr("id");
-    Debug.log("I18n.Element.translate", id);
     
     e = element.attr("tagName").toLowerCase();
     
@@ -162,8 +161,6 @@ I18n.u = function(id, args) {
     
     try {
       key = id.toUpperCase();
-    
-      Debug.log("id", id);
     
       I18n.update(id, key, args);    
     } catch(omg) {
