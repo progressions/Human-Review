@@ -80,7 +80,7 @@ Status = {
     Data.fetch(["HumanReview"], function(response) {
       Debug.log("Status.check", response);
       
-      if (response["HumanReview"]) {
+      if (response["data"]["HumanReview"]) {
         $("#opt_out").show();
       } else {
         $("#opt_in").show();
