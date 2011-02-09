@@ -80,7 +80,12 @@ Status = {
     Data.fetch(["HumanReview"], function(response) {
       Debug.log("Status.check", response);
       
-      callback();
+      if (response["HumanReview"]) {
+        $("#opt_out").show();
+      } else {
+        $("#opt_in").show();
+      }
+      YAHOO.init.finish();
     });
   },
   
@@ -120,7 +125,7 @@ YAHOO.init.startup = function() {
   try {
     Debug.log("YAHOO.init.startup");
     
-    Status.check(YAHOO.init.finish);
+    Status.check();
     
     // YAHOO.init.finish();
   } catch(wtf) {
@@ -131,7 +136,8 @@ YAHOO.init.startup = function() {
 // Adds behaviors/observers to elements on the page
 //
 YAHOO.init.addBehaviors = function() {
-  $("#send_message").click(Status.optIn);
+  $("#opt_in_link").click(Status.optIn);
+  $("#opt_out_link").click(Status.optOut);
 };
 
 I18n.localTranslations = function() {
