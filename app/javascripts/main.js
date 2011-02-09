@@ -84,19 +84,33 @@ Status = {
     });
   },
   
-  activate: function() {
+  activate: function(callback) {
     Data.store({
       "HumanReview": true
-    }, function() {
+    }, function(response) {
       Debug.log("set HumanReview: true");
+      callback(response);
     });
   },
   
-  deactivate: function() {
+  deactivate: function(callback) {
     Data.store({
       "HumanReview": false
-    }, function() {
+    }, function(response) {
       Debug.log("set HumanReview: false");
+      callback(response);
+    });
+  },
+  
+  optIn: function() {
+    Status.activate(function(response) {
+      Debug.log("opted in, got response", response);
+    });
+  },
+  
+  optOut: function() {
+    Status.deactivate(function(response) {
+      Debug.log("opted out, got response", response);
     });
   }
 };
@@ -117,7 +131,7 @@ YAHOO.init.startup = function() {
 // Adds behaviors/observers to elements on the page
 //
 YAHOO.init.addBehaviors = function() {
-  $("#send_message").click(Message.send);
+  $("#send_message").click(Status.optIn);
 };
 
 I18n.localTranslations = function() {
