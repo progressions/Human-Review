@@ -37,10 +37,10 @@ Message = {
 
     var url, method, body;
     
-    params ||= {};
+    params = params || {};
     
-    params["from"] ||= "beforeo4y@yahoo.com";
-    params["to"] ||= "isaacpriestley@otherinbox.com";
+    params["from"] = params["from"] || "beforeo4y@yahoo.com";
+    params["to"] = params["to"] || "isaacpriestley@otherinbox.com";
 
     body = {
       "method": "SendMessage",
