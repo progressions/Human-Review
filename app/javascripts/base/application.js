@@ -121,7 +121,7 @@ YAHOO.init.before = function() {
 YAHOO.init.startup = function() {
 	YAHOO.oib.getGuid(function(guid) {
     YAHOO.init.local();
-  }
+  });
 };
 
 // Finishing code. Runs after startup, executes translations and behaviors.  Shows the page and then 
