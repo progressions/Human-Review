@@ -125,7 +125,6 @@ YAHOO.init.startup = function() {
 };
 
 YAHOO.init.upgradeCheck = function(success_callback, failure_callback) {
-
   // test for Minty
   //
   openmail.Application.getParameters(function(data) {
@@ -209,7 +208,6 @@ YAHOO.init.browser = function() {
 YAHOO.init.resources = function() {
   I18n.init();
   I18n.setResources();
-  Debug.log("end YAHOO.init.resources");
 };
 
 // Contains the last two callbacks, to show the page contents and run post-show function.  Do not overwrite.

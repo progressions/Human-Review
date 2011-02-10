@@ -259,6 +259,7 @@ I18n.findAndTranslateAll = function() {
 	$(".p").each(function(i, element) {
     element = $(element);
     try {
+      Debug.log("Translating a p element", element.html());
       I18n.p(element);
     } catch(e) {
       Debug.error("Translation error for element: ", e);
@@ -274,7 +275,7 @@ I18n.findAndTranslateAll = function() {
     }
   });  
 	
-	Debug.log("End I18n.findAndTranslateAll");
+	Debug.log("end I18n.findAndTranslateAll");
 };
 
 I18n.translateSidebar = function() {
