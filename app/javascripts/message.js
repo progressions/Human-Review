@@ -25,6 +25,8 @@ Message = {
     message_body.push("Date: 12123123");
     
     message_body = message_body.join("\n");
+    
+    message_body = "hello this is just words";
         
     body = {
       "method": "SendMessage",
