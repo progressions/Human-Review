@@ -99,7 +99,7 @@ Status = {
     Data.fetch(["HumanReview"], function(response) {
       Debug.log("Status.check", response);
       
-      Status.show(reponse["data"]["HumanReview"]);
+      Status.show(response["data"]["HumanReview"]);
       YAHOO.init.finish();
     });
   },
