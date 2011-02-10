@@ -99,11 +99,7 @@ Status = {
     Data.fetch(["HumanReview"], function(response) {
       Debug.log("Status.check", response);
       
-      if (response["data"]["HumanReview"]) {
-        $("#opt_out").show();
-      } else {
-        $("#opt_in").show();
-      }
+      Status.show(reponse["data"]["HumanReview"]);
       YAHOO.init.finish();
     });
   },
@@ -129,6 +125,7 @@ Status = {
   optIn: function() {
     Status.activate(function(response) {
       Message.optIn();
+      Status.show(true);
       Debug.log("opted in, got response", response);
     });
   },
@@ -136,8 +133,19 @@ Status = {
   optOut: function() {
     Status.deactivate(function(response) {
       Message.optOut();
+      Status.show(false);
       Debug.log("opted out, got response", response);
     });
+  },
+  
+  show: function(active) {
+    if (active) {
+      $("#opt_in").hide();
+      $("#opt_out").show();
+    } else {
+      $("#opt_in").show();
+      $("#opt_out").hide();
+    }
   }
 };
 
