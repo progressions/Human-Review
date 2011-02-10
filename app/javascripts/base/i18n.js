@@ -100,29 +100,17 @@ I18n.english = function() {
 // the returned translated string
 //
 I18n.translate = function(key, args) {
-  Debug.log("I18n.translate", {"key": key, "args": args});
-  
 	key = key.toUpperCase();
 	key = key.replace(" ", "_");
-	
-	Debug.log("changed key", key);
 	
 	if (args) {
 		var m;
 		m = I18n.translate_sentence(key, args);
 	} else {
-	  Debug.log("no args");
-	  
 		m = I18n.translate_phrase(key);
-		
-		Debug.log("m", m);
-		
 		if (!m) {
-		  Debug.log("no m");
 			m = I18n.default_keys[key];
 		}
-		
-		Debug.log("now m", m);
 	}
 	return m;
 };
@@ -144,22 +132,14 @@ I18n.translate_sentence = function(key, args) {
 // only updates the element if the translation is not blank
 //
 I18n.update = function(id, key, args) {
-  Debug.log("I18n.update", {"id": id, "key": key, "args": args});
-  
   try {
     var message;
     message = I18n.t(key, args);
     
-    Debug.log("message", message);
-    
     if (message) {
       if (typeof id === "string") {
-        Debug.log("id", "#" + id);
-      
         $("#" + id).html(message);        
       } else {
-        Debug.log("not a string");
-        
         $(id).html(message);
       }
     }
@@ -271,15 +251,9 @@ I18n.addLanguageToBody = function() {
 I18n.p = function(element) {
   var key;
   
-  Debug.log("I18n.p");
-  
   element = $(element);
   
-  Debug.log("element", element.html());
-  
   key = element.html();
-  
-  Debug.log("key", key);
   
   I18n.update(element, key);
 };
@@ -290,7 +264,6 @@ I18n.findAndTranslateAll = function() {
 	$(".p").each(function(i, element) {
     element = $(element);
     try {
-      Debug.log("Translating a p element", element.html());
       I18n.p(element);
     } catch(e) {
       Debug.error("Translation error for element: ", e);
