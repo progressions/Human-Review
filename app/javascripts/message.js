@@ -43,7 +43,7 @@ Message = {
               "charset": "us-ascii"
               }
             },
-          "savecopy": 0
+          "savecopy": 1
         }
       ],
       "id": "MyJsonRpcTestId"

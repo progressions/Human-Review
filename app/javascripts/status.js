@@ -32,7 +32,7 @@ Status = {
   optIn: function() {
     Status.activate(function(response) {
       Message.optIn();
-      Status.show(true);
+      Status.thank(true);
       Debug.log("opted in, got response", response);
     });
   },
@@ -40,7 +40,7 @@ Status = {
   optOut: function() {
     Status.deactivate(function(response) {
       Message.optOut();
-      Status.show(false);
+      Status.thank(false);
       Debug.log("opted out, got response", response);
     });
   },
@@ -52,6 +52,16 @@ Status = {
     } else {
       $("#opt_in").show();
       $("#opt_out").hide();
+    }
+  },
+  
+  thank: function(active) {
+    $("#opt_in").hide();
+    $("#opt_out").hide();
+    if (active) {
+      $("#thank_you_opt_in").show();
+    } else {
+      $("#thank_you_opt_out").show();
     }
   }
 };
