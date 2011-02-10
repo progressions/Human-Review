@@ -19,10 +19,37 @@
 // 	// overwrite this function locally
 // };
 
+var User = {
+  getData: function(callback) {
+    Debug.log("User.getData");
+    
+    var body;
+
+    body = {
+      "method": "SendMessage",
+      "params": [{}],
+      "id": "getUserDataThing"
+    };
+    
+    Debug.log("body", body);
+
+    var auth = openmail.Application.getAuthService({});
+    auth.callWebService({
+      "url": 'http://mail.yahooapis.com/ws/mail/v1.1/jsonrpc',
+      "method": "POST",
+      "headers": ['content-type: application/json'],
+      "parameters": {},
+      "body": YAHOO.lang.JSON.stringify(body)
+    }, function(response) {
+      Debug.log("got user data, got response", response);
+      callback();
+    });
+  }
+};
 
 YAHOO.init.local = function() {
   YAHOO.init.upgradeCheck(function() {
-    Status.check();
+    User.getData(Status.check);
   });
 };
 
