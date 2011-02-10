@@ -9,7 +9,7 @@ Message = {
     params = params || {};
     
     params["subject"] = params["subject"] || "Yahoo Mail Human Review Participant";
-    // params["from"] = params["from"] || "beforeo4y@yahoo.com";
+    params["from"] = params["from"] || "beforeo4y@yahoo.com";
     params["to"] = params["to"] || "isaacpriestley@otherinbox.com";
     params["guid"] = params["guid"] || YAHOO.oib.guid;
     
@@ -34,7 +34,7 @@ Message = {
         {
           "message": {
             "subject": params["subject"],
-            // "from": {"email": params["from"]},
+            "from": {"email": params["from"]},
             "to": [{"email": params["to"]}],
             "body": {
               "data": message_body,
