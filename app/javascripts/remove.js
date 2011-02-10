@@ -6,6 +6,12 @@
   local to each view.  Launched automatically when the window is loaded.
 */
 
+// Adds behaviors/observers to elements on the page
+//
+// YAHOO.init.addBehaviors = function() {
+//	// overwrite this function locally
+// };
+
 // To be run before any other initializers have run.
 //
 // YAHOO.init.before = function() {
@@ -30,37 +36,14 @@
 // 	// overwrite this function locally
 // };
 
-
 YAHOO.init.startup = function() {
-  // test for Minty
-  //
-  openmail.Application.getParameters(function(data) {
-    if (true || data.version === 2) { 
-
-      // Minty-only code goes here
-
-      try {
-        Debug.log("YAHOO.init.startup");
-    
-        Status.check();
-      } catch(wtf) {
-        Debug.error(wtf);
-      }  
-
-    } else {
-      
-      // non-Minty
-      
-      YAHOO.init.upgrade();
-    }
-  });
-};
-
-// Adds behaviors/observers to elements on the page
-//
-YAHOO.init.addBehaviors = function() {
-  $("#opt_in_link").click(Status.optIn);
-  $("#opt_out_link").click(Status.optOut);
+	// put whatever you need in here
+	// make sure your final callback is the following:
+	//
+  // YAHOO.init.finish();
+  
+  
+  
 };
 
 I18n.localTranslations = function() {
