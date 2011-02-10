@@ -153,9 +153,15 @@ I18n.update = function(id, key, args) {
     Debug.log("message", message);
     
     if (message) {
-      Debug.log("id", "#" + id);
+      if (typeof id === "string") {
+        Debug.log("id", "#" + id);
       
-      $("#" + id).html(message);
+        $("#" + id).html(message);        
+      } else {
+        Debug.log("not a string");
+        
+        $(id).html(message);
+      }
     }
   } catch(err) {
     Debug.error("Error in i18n.update: ", {
