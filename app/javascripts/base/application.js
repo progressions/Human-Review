@@ -61,6 +61,23 @@ YAHOO.oib.showTranslations = function() {
   Debug.log("end YAHOO.oib.showTranslations");
 };
 
+// gets the guid from the Yahoo! environment and executes the success callback
+// if there is a guid, and the error callback if it's undefined
+//
+// YAHOO.oib.guid
+//
+YAHOO.oib.getGuid = function(success_function, error_function) {
+  openmail.Application.getParameters(function(response) {
+    YAHOO.oib.guid = response.user.guid;
+		if (YAHOO.oib.guid !== undefined) {
+			success_function(YAHOO.oib.guid);
+		}
+		else {
+			error_function();
+		}
+  });
+};
+
 /* 
 
 INITIALIZER CODE
@@ -102,6 +119,9 @@ YAHOO.init.before = function() {
 // Main startup code. Overwrite this function to execute after YAHOO.init.before and before YAHOO.init.after.
 //
 YAHOO.init.startup = function() {
+	YAHOO.oib.getGuid(function(guid) {
+    YAHOO.init.local();
+  }
 };
 
 // Finishing code. Runs after startup, executes translations and behaviors.  Shows the page and then 

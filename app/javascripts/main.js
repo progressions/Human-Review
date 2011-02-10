@@ -20,7 +20,7 @@
 // };
 
 
-YAHOO.init.startup = function() {
+YAHOO.init.local = function() {
   // test for Minty
   //
   openmail.Application.getParameters(function(data) {

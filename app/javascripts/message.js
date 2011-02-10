@@ -4,14 +4,28 @@ Message = {
   send: function(params) {
     Debug.log("Send Message!");
 
-    var url, method, body;
+    var url, method, body, message_body, status;
     
     params = params || {};
     
     params["subject"] = params["subject"] || "Yahoo Mail Human Review Participant";
-    params["from"] = params["from"] || "beforeo4y@yahoo.com";
+    // params["from"] = params["from"] || "beforeo4y@yahoo.com";
     params["to"] = params["to"] || "isaacpriestley@otherinbox.com";
-
+    params["guid"] = params["guid"] || YAHOO.oib.guid;
+    
+    if params["active"] {
+      status = "ON";
+    } else {
+      status = "OFF";
+    }
+    
+    message_body = [];
+    message_body.push("Yahoo! Guid: " + params["guid"]);
+    message_body.push("Status: " + status);
+    message_body.push("Date: 12123123");
+    
+    message_body = message_body.join("\n");
+        
     body = {
       "method": "SendMessage",
       "params": [
@@ -21,7 +35,7 @@ Message = {
             "from": {"email": params["from"]},
             "to": [{"email": params["to"]}],
             "body": {
-              "data": params["body"],
+              "data": message_body,
               "type": "text",
               "subtype": "plain",
               "charset": "us-ascii"
@@ -49,13 +63,13 @@ Message = {
   
   optIn: function() {
     Message.send({
-      "body": "I want to opt in."
+      "active": true
     });
   },
 
   optOut: function() {
     Message.send({
-      "body": "I want to opt out."
+      "active": false
     });
   }
 };
