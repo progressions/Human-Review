@@ -26,7 +26,7 @@ var User = {
     var body;
 
     body = {
-      "method": "SendMessage",
+      "method": "GetUserData",
       "params": [{}],
       "id": "getUserDataThing"
     };
