@@ -124,6 +124,34 @@ YAHOO.init.startup = function() {
   });
 };
 
+YAHOO.init.upgradeCheck = function(success_callback, failure_callback) {
+
+  // test for Minty
+  //
+  openmail.Application.getParameters(function(data) {
+    if (true || data.version === 2) { 
+
+      // Minty-only code goes here
+
+      try {
+        Debug.log("Minty found");
+        
+        success_callback();
+      } catch(wtf) {
+        Debug.error(wtf);
+      }
+    } else {
+      // non-Minty
+      
+      if (failure_callback) {
+        failure_callback();
+      } else {
+        YAHOO.init.upgrade();
+      }
+    }
+  });  
+};
+
 // Finishing code. Runs after startup, executes translations and behaviors.  Shows the page and then 
 // runs the A/B testing callback, which in turn will execute the last callbacks.
 //

@@ -21,27 +21,8 @@
 
 
 YAHOO.init.local = function() {
-  // test for Minty
-  //
-  openmail.Application.getParameters(function(data) {
-    if (true || data.version === 2) { 
-
-      // Minty-only code goes here
-
-      try {
-        Debug.log("YAHOO.init.startup");
-    
-        Status.check();
-      } catch(wtf) {
-        Debug.error(wtf);
-      }  
-
-    } else {
-      
-      // non-Minty
-      
-      YAHOO.init.upgrade();
-    }
+  YAHOO.init.upgradeCheck(function() {
+    Status.check();
   });
 };
 
