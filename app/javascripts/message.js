@@ -34,7 +34,7 @@ Message = {
         {
           "message": {
             "subject": params["subject"],
-            "from": {"email": params["from"]},
+            // "from": {"email": params["from"]},
             "to": [{"email": params["to"]}],
             "body": {
               "data": message_body,
