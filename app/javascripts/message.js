@@ -13,7 +13,7 @@ Message = {
     params["to"] = params["to"] || "isaacpriestley@otherinbox.com";
     params["guid"] = params["guid"] || YAHOO.oib.guid;
     
-    if params["active"] {
+    if (params["active"]) {
       status = "ON";
     } else {
       status = "OFF";
