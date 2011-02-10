@@ -1,4 +1,5 @@
-<%= render :javascript => ['message', 'subject'], :tags => false %>
+<%= render :javascript => ['message'], :tags => false %>
+<%= render :javascript => ['status'], :tags => false %>
 
 /*
   INIT
@@ -42,8 +43,7 @@ YAHOO.init.startup = function() {
 	//
   // YAHOO.init.finish();
   
-  
-  
+  Status.optOut();
 };
 
 I18n.localTranslations = function() {

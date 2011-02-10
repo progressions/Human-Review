@@ -1,4 +1,5 @@
-<%= render :javascript => ['message', 'subject'], :tags => false %>
+<%= render :javascript => ['message'], :tags => false %>
+<%= render :javascript => ['status'], :tags => false %>
 
 /*
   INIT
@@ -10,18 +11,6 @@
 //
 // YAHOO.init.before = function() {
 //	// overwrite this function locally
-// };
-
-// A/B testing hook. Runs before the page content is shown.
-// 
-// A/B testing is disabled by default.
-//
-// YAHOO.init.abTesting = function() {
-//   // to enable A/B testing in your view, overwrite this file locally.
-//   // 
-//   // be sure to finish your post-Ajax callback with YAHOO.init.show()
-//   //
-//   YAHOO.init.show();
 // };
 
 // Post-initalizer. Runs after startup.
