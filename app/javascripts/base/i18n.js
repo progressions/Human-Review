@@ -100,17 +100,29 @@ I18n.english = function() {
 // the returned translated string
 //
 I18n.translate = function(key, args) {
+  Debug.log("I18n.translate", {"key": key, "args": args});
+  
 	key = key.toUpperCase();
 	key = key.replace(" ", "_");
+	
+	Debug.log("changed key", key);
+	
 	if (args) {
 		var m;
 		m = I18n.translate_sentence(key, args);
-	} else
-	{
+	} else {
+	  Debug.log("no args");
+	  
 		m = I18n.translate_phrase(key);
+		
+		Debug.log("m", m);
+		
 		if (!m) {
+		  Debug.log("no m");
 			m = I18n.default_keys[key];
 		}
+		
+		Debug.log("now m", m);
 	}
 	return m;
 };
