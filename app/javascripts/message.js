@@ -49,7 +49,7 @@ Message = {
       "id": "MyJsonRpcTestId"
     };
     YahooRequest.get(body, function(response) {
-      Debug.log("hello");
+      // any callback needed?
     });
   },
   
