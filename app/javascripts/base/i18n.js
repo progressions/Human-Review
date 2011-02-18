@@ -45,7 +45,6 @@ I18n.Element = {
     element = $(element);
     
     id = element.attr("id");
-    Debug.log("I18n.Element.translate", id);
     
     e = element.attr("tagName").toLowerCase();
     
@@ -103,11 +102,11 @@ I18n.english = function() {
 I18n.translate = function(key, args) {
 	key = key.toUpperCase();
 	key = key.replace(" ", "_");
+	
 	if (args) {
 		var m;
 		m = I18n.translate_sentence(key, args);
-	} else
-	{
+	} else {
 		m = I18n.translate_phrase(key);
 		if (!m) {
 			m = I18n.default_keys[key];
@@ -133,12 +132,16 @@ I18n.translate_sentence = function(key, args) {
 // only updates the element if the translation is not blank
 //
 I18n.update = function(id, key, args) {
-  Debug.log("I18n.update");
   try {
     var message;
     message = I18n.t(key, args);
+    
     if (message) {
-      $("#" + id).html(message);
+      if (typeof id === "string") {
+        $("#" + id).html(message);        
+      } else {
+        $(id).html(message);
+      }
     }
   } catch(err) {
     Debug.error("Error in i18n.update: ", {
@@ -157,16 +160,12 @@ I18n.update = function(id, key, args) {
 // within the local scope of the current view, and update the element with
 // that translation
 //
-I18n.u = function(id, args) {  
-  Debug.log("typeof id === " + typeof id);
-  
+I18n.u = function(id, args) {
   if (typeof id === "string") {
     var key;
     
     try {
       key = id.toUpperCase();
-    
-      Debug.log("id", id);
     
       I18n.update(id, key, args);    
     } catch(omg) {
@@ -273,7 +272,6 @@ I18n.findAndTranslateAll = function() {
 
   $(".t").each(function(i, element) {
     element = $(element);
-    Debug.log("it worked", element.attr("id"));
     try {
       I18n.Element.translate(element);
     } catch(e) {
@@ -281,7 +279,7 @@ I18n.findAndTranslateAll = function() {
     }
   });  
 	
-	Debug.log("End I18n.findAndTranslateAll");
+	Debug.log("end I18n.findAndTranslateAll");
 };
 
 I18n.translateSidebar = function() {

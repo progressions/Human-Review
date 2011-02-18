@@ -6,7 +6,7 @@
 
 */
 
-var Browser, Data, OIB;
+var Browser, OIB;
 
 /* 
 	GLOBAL CONSTANTS 
@@ -45,7 +45,6 @@ YAHOO.oib.clearPermanentStore = function() {
   YAHOO.oib.ymail_wssid = null;
 };
 
-
 YAHOO.oib.setTimeoutInSeconds = function(callback_function, interval) {
 	setTimeout(callback_function, interval * 1000);
 };
@@ -59,6 +58,23 @@ YAHOO.oib.showTranslations = function() {
   I18n.localTranslations();
 	
   Debug.log("end YAHOO.oib.showTranslations");
+};
+
+// gets the guid from the Yahoo! environment and executes the success callback
+// if there is a guid, and the error callback if it's undefined
+//
+// YAHOO.oib.guid
+//
+YAHOO.oib.getGuid = function(success_function, error_function) {
+  openmail.Application.getParameters(function(response) {
+    YAHOO.oib.guid = response.user.guid;
+		if (YAHOO.oib.guid !== undefined) {
+			success_function(YAHOO.oib.guid);
+		}
+		else {
+			error_function();
+		}
+  });
 };
 
 /* 
@@ -102,6 +118,36 @@ YAHOO.init.before = function() {
 // Main startup code. Overwrite this function to execute after YAHOO.init.before and before YAHOO.init.after.
 //
 YAHOO.init.startup = function() {
+  YAHOO.oib.getGuid(function(guid) {
+    YAHOO.init.local();
+  });
+};
+
+YAHOO.init.upgradeCheck = function(success_callback, failure_callback) {
+  // test for Minty
+  //
+  openmail.Application.getParameters(function(data) {
+    if (true || data.version === 2) { 
+
+      // Minty-only code goes here
+
+      try {
+        Debug.log("Minty found");
+        
+        success_callback();
+      } catch(wtf) {
+        Debug.error(wtf);
+      }
+    } else {
+      // non-Minty
+      
+      if (failure_callback) {
+        failure_callback();
+      } else {
+        YAHOO.init.upgrade();
+      }
+    }
+  });  
 };
 
 // Finishing code. Runs after startup, executes translations and behaviors.  Shows the page and then 
@@ -161,7 +207,6 @@ YAHOO.init.browser = function() {
 YAHOO.init.resources = function() {
   I18n.init();
   I18n.setResources();
-  Debug.log("end YAHOO.init.resources");
 };
 
 // Contains the last two callbacks, to show the page contents and run post-show function.  Do not overwrite.
