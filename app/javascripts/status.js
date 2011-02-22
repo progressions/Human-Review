@@ -2,20 +2,25 @@ Status = {
   // return true if the user has opted in, false if they've not or they have opted out
   //
   check: function(response) {
+    Debug.log("Status.check", response);
+    
     Status.email = response["defaultFromAddress"];
     Debug.log("Saved user email", Status.email);
     
-    Data.fetch(["HumanReview"], function(status) {
+    Data.fetch(["HumanReview", "HumanReviewDate"], function(status) {
       Debug.log("Status.check", status);
       
-      Status.show(status["data"]["HumanReview"]);
+      Status.show(status["data"]);
       YAHOO.init.finish();
     });
   },
   
   activate: function(callback) {
+    var date = new Date();
+    
     Data.store({
-      "HumanReview": true
+      "HumanReview": true,
+      "HumanReviewDate": date
     }, function(response) {
       Debug.log("set HumanReview: true");
       callback(response);
@@ -24,7 +29,8 @@ Status = {
   
   deactivate: function(callback) {
     Data.store({
-      "HumanReview": false
+      "HumanReview": false,
+      "HumanReviewDate": null
     }, function(response) {
       Debug.log("set HumanReview: false");
       callback(response);
@@ -33,24 +39,32 @@ Status = {
   
   optIn: function() {
     Status.activate(function(response) {
-      Message.optIn();
-      Status.thank(true);
-      Debug.log("opted in, got response", response);
+      Message.optIn(function() {
+        Status.thank(true);
+        Debug.log("opted in, got response", response);        
+      });
     });
   },
   
   optOut: function() {
     Status.deactivate(function(response) {
-      Message.optOut();
-      Status.thank(false);
-      Debug.log("opted out, got response", response);
+      Message.optOut(function() {
+        Status.thank(false);
+        Debug.log("opted out, got response", response);        
+      });
     });
   },
   
-  show: function(active) {
+  show: function(status) {
+    var active, date;
+    
+    active = status["HumanReview"];
+    date = status["HumanReviewDate"];
+    
     if (active) {
       $("#opt_in").hide();
       $("#opt_out").show();
+      $("#human_review_date").html(date.toString());
     } else {
       $("#opt_in").show();
       $("#opt_out").hide();

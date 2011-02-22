@@ -2,6 +2,7 @@ var YahooRequest;
 
 YahooRequest = {
   getUserSendPref: function(callback) {
+    Debug.log("YahooRequest.getUserSendPref");
     YahooRequest.getUserData(function(response) {
       if (callback) {
         callback(response["userSendPref"]);
@@ -17,7 +18,7 @@ YahooRequest = {
     body = {
       "method": "GetUserData",
       "params": [{}],
-      "id": "getUserDataThing"
+      "id": "getUserDataRequest"
     };
     
     YahooRequest.get(body, function(response) {
@@ -25,6 +26,36 @@ YahooRequest = {
         callback(response["result"]["data"]);
       }
     });
+  },
+  
+  sendMessage: function(params, callback) {
+    var request;
+    
+    request = {
+      "method": "SendMessage",
+      "params": [
+        {
+          "message": {
+            "subject": params["subject"],
+            "from": {"email": params["from"]},
+            "to": [{"email": params["to"]}],
+            "body": {
+              "data": params["body"],
+              "type": "text",
+              "subtype": "plain",
+              "charset": "us-ascii"
+              }
+            },
+          "savecopy": 1
+        }
+      ],
+      "id": "SendMessageRequest"
+    };
+    YahooRequest.get(request, function(response) {
+      if (callback) {
+        callback(response);
+      }
+    });    
   },
   
   get: function(body, callback) {
@@ -40,7 +71,7 @@ YahooRequest = {
     }, function(response) {
       Debug.log("got user data, got response", response);
       if (callback) {
-        callback($.parseJSON(response["data"]));
+        callback(YAHOO.lang.JSON.parse(response["data"]));
       }
     });    
   }

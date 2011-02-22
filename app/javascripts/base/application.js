@@ -24,13 +24,23 @@ function unixTimeToDate(unixtime) {
 function formatUnixDate(unixtime) {
   var date;
   date = unixTimeToDate(unixtime);
-  return date.toString("MMMM d, yyyy");
+  return date.toString();
 }
 
 YAHOO.oib.showError = function() {
   $('#main').hide();
 	$('#loading').hide();
 	$('#error').show();
+};
+
+YAHOO.oib.showErrorCheck = function() {
+  Debug.log("YAHOO.oib.showErrorCheck");
+  if (!YAHOO.oib.page_loaded) {
+    Debug.log("YAHOO.oib.page_loaded is undefined");
+    YAHOO.oib.showError();
+  } else {
+    Debug.log("YAHOO.oib.page_loaded is defined");
+  }
 };
 
 YAHOO.oib.showLoading = function() {
@@ -184,7 +194,7 @@ YAHOO.oib.init = function() {
   Debug.info("OIB.init for view " + View.name, "<%= @message %>");
 
   try {
-    // YAHOO.init.browser();
+    YAHOO.oib.setTimeoutInSeconds(YAHOO.oib.showErrorCheck, 5);
     YAHOO.init.resources();
     I18n.addLanguageToBody();
     I18n.translateLoading();

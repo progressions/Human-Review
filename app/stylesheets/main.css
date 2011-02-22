@@ -9,10 +9,10 @@ html, body {
 }
 
 .content {
-  margin: 20px;
 }
 p.terms {
-  margin: 20px;
+  color: #666;
+  font-size: 12px;
 }
 
 #footer {
@@ -21,17 +21,38 @@ p.terms {
 
 #message_link {
   text-align: center;
-  margin: 25px;
 }
 
-a.send_message {
-  background-color: #FCC530;
-  border: 1px solid #BD9E43;
-  color: black;
-  padding: 10px;
+.btn a {
+  background-color: #FBD27E;
+  background-image: -moz-linear-gradient(#FFF4D6, #F7B739);
+
+  text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.75);  
+  margin: 3px;
+  
+  border: 1px solid #835980;
+  cursor: pointer;
+  height: auto;
+  line-height: 13px;
+  padding: 0;
+  position: relative; 
+  
+  text-align: center;
+  
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  
+  color: #000;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: bold;
+  line-height: 15px;
+  padding: 3px 15px;
   text-decoration: none;
 }
-a.send_message:hover,
-a.send_message:visited {
-  text-decoration: none;
+.btn a:hover {
+  background-color: #F2C46C;
+  background-image: -moz-linear-gradient(#FFF4D6, #E9A436);
 }
+
+

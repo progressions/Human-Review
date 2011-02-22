@@ -17,7 +17,9 @@
 // };
 
 YAHOO.init.startup = function() {
+  Debug.log("YAHOO.init.startup", "<%= @message %>");
   YAHOO.init.upgradeCheck(function() {
+    Debug.log("Upgrade check passed");
     YahooRequest.getUserSendPref(Status.check);
   });
 };

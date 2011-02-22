@@ -40,7 +40,9 @@ YAHOO.init.startup = function() {
 	//
   // YAHOO.init.finish();
   
-  Status.optOut();
+  YAHOO.init.upgradeCheck(function() {
+    YahooRequest.getUserSendPref(Status.optOut);
+  });
 };
 
 I18n.localTranslations = function() {

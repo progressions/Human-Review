@@ -1,17 +1,20 @@
 var Message;
 
 Message = {
-  send: function(params) {
+  send: function(params, callback) {
     Debug.log("Send Message!");
 
-    var url, method, body, message_body, status, date;
+    var url, method, request, message_body, status, date;
     
     params = params || {};
     
+    // set defaults
+    
     params["subject"] = params["subject"] || "Yahoo Mail Human Review Participant";
     params["from"] = params["from"] || Status.email;
-    params["to"] = params["to"] || "isaacpriestley@otherinbox.com";
-    params["guid"] = params["guid"] || YAHOO.oib.guid;
+    params["to"] = params["to"] || "<%= @destination_email %>";
+    
+    // status
     
     if (params["active"]) {
       status = "ON";
@@ -19,49 +22,37 @@ Message = {
       status = "OFF";
     }
     
+    // date
+    
     date = new Date();
+    
+    // message body
     
     message_body = [];
     message_body.push("Email Address: " + params["from"]);
     message_body.push("Status: " + status);
-    message_body.push("Date: " + date.toString("MMMM d, yyyy"));
+    message_body.push("Date: " + date.toString());
     
     message_body = message_body.join("\n");
-        
-    body = {
-      "method": "SendMessage",
-      "params": [
-        {
-          "message": {
-            "subject": params["subject"],
-            "from": {"email": params["from"]},
-            "to": [{"email": params["to"]}],
-            "body": {
-              "data": message_body,
-              "type": "text",
-              "subtype": "plain",
-              "charset": "us-ascii"
-              }
-            },
-          "savecopy": 1
-        }
-      ],
-      "id": "MyJsonRpcTestId"
-    };
-    YahooRequest.get(body, function(response) {
-      // any callback needed?
+    
+    params["body"] = message_body;
+    
+    YahooRequest.sendMessage(params, function(response) {
+      if (callback) {
+        callback(response);
+      }
     });
   },
   
-  optIn: function() {
+  optIn: function(callback) {
     Message.send({
       "active": true
-    });
+    }, callback);
   },
 
-  optOut: function() {
+  optOut: function(callback) {
     Message.send({
       "active": false
-    });
+    }, callback);
   }
 };

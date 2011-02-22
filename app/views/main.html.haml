@@ -1,30 +1,23 @@
-%h1#main_heading.t Human Review
+%h1#main_heading.t Yahoo! Research
 
 #opt_in{:style => "display: none;"}
-  %h2#opt_in_subhead.t Help Yahoo! help you by opting into our Human Review Program
-
   .content
-    %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum imperdiet, diam quis vehicula pretium, dolor felis euismod mi, eu facilisis mauris dolor sit amet odio. 
-
-    %p Quisque posuere quam ut arcu scelerisque interdum. In hac habitasse platea dictumst. Vestibulum rhoncus convallis augue, ac hendrerit eros tempor ut. 
-
-    %p#message_link
-      %a#opt_in_link.send_message{:href => "#"} Opt In
+    %p.terms Yahoo! researchers and scientists are instrumental in creating and continually improving Yahoo!’s cutting edge products and services that 100s of millions of people use every day around the world. To be able to do that better, we need your help. Select employees and trusted partners working on Y!'s behalf need to review a small percentage of emails and IMs to research topics like the subjects that are important to users, how users communicate with each other, and how to better personalize products, content, and advertising.
+    
+    %p.terms You and your emails and IMs can play a critical role in helping us improve Yahoo! products and services. Simply click on the “I Agree” button below to contribute all emails and IMs you send, receive, and store to this research project. Your contribution to Yahoo! research is greatly appreciated. To learn more about this Yahoo! research project, please click on this FAQ link. You can always stop participating in this Yahoo! research project. Simply go to the “Applications” window in Yahoo! Mail and click on “Human Review”. Follow the instructions and we will stop reviewing your emails and IMs from that date forward and will delete the emails you previously contributed within approximately two weeks. 
+    
+    %p#message_link.btn
+      %a#opt_in_link.send_message{:href => "#"} I Agree
   
-    %p.terms By clicking on the "Opt In" button above, I certify that I have read and agree to the new Yahoo! Terms of Service, Yahoo! Privacy Policy and Mail Terms of Service, and to receive account-related communications from Yahoo! electronically.  Yahoo! automatically identifies items such as words, links, people and subjects from your Yahoo! communications services to deliver product features and relevant advertising.
-
+    
 #opt_out{:style => "display: none;"}
-  %h2#opt_out_subhead.t Thanks anyway
-
   .content
-    %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum imperdiet, diam quis vehicula pretium, dolor felis euismod mi, eu facilisis mauris dolor sit amet odio. 
-
-    %p Quisque posuere quam ut arcu scelerisque interdum. In hac habitasse platea dictumst. Vestibulum rhoncus convallis augue, ac hendrerit eros tempor ut. 
-
-    %p#message_link
+    %p.terms 
+      You opted in to Yahoo! Research Human Review on
+      %span#human_review_date Jan 1, 2011. 
+    
+    %p#message_link.btn
       %a#opt_out_link.send_message{:href => "#"} Opt Out
-
-    %p.terms By clicking on the "Opt Out" button above, I certify that I have read and agree to the new Yahoo! Terms of Service, Yahoo! Privacy Policy and Mail Terms of Service, and to receive account-related communications from Yahoo! electronically.  Yahoo! automatically identifies items such as words, links, people and subjects from your Yahoo! communications services to deliver product features and relevant advertising.
 
 #thank_you_opt_in{:style => "display: none;"}
   %h1.p thank_you
