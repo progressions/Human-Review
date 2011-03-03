@@ -24,7 +24,7 @@ YAHOO.namespace("launcher");
 
 YAHOO.launcher.launch = function(view, title, type) {
   openmail.Application.getParameters(function(response) {
-  	title = I18n.t("ORGANIZER");
+  	title = I18n.t("title");
 		// don't try to relaunch current tab
 		if (response.data === null || response.data.view !== view) {
 			openmail.Application.openView(
@@ -59,10 +59,7 @@ YAHOO.launcher.launchActiveTab = function(view, title) {
 
 	
 YAHOO.launcher.launchView = function(launch_view) {
-  // get Yahoo! user's guid and ymail_wssid
-  YAHOO.oib.getGuidAndYmailWssid(function(guid, ymail_wssid) {
-    launch_view();
-  });
+  launch_view();
 };
 
 
@@ -77,3 +74,19 @@ YAHOO.launcher.l = function(view) {
 
 Launcher = YAHOO.launcher;
 
+
+Launcher.launchMain = function() {
+  Launcher.launchTab("main", "Main");
+};
+
+Launcher.launchRemove = function() {
+  Launcher.launchTab("remove", "Remove");
+};
+
+Launcher.launchPrivacy = function() {
+  Launcher.launchTab("privacy", "Privacy");
+};
+
+Launcher.launchFaq = function() {
+  Launcher.launchTab("faq", "Faq");
+};

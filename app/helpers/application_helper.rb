@@ -29,7 +29,7 @@ module ApplicationHelper
     if Application.current_view?(view)
       text
     else
-      link_to(text, view, {:id => view_id, :class => "p"})
+      link_to(text, view, {:class => "p"})
     end
   end
 end
