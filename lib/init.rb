@@ -1,4 +1,5 @@
 require 'rubygems'
+require 'thread'
 require 'fileutils'
 require 'erb'
 require 'net/http'
