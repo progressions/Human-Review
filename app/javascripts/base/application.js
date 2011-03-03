@@ -128,9 +128,7 @@ YAHOO.init.before = function() {
 // Main startup code. Overwrite this function to execute after YAHOO.init.before and before YAHOO.init.after.
 //
 YAHOO.init.startup = function() {
-  YAHOO.oib.getGuid(function(guid) {
-    YAHOO.init.local();
-  });
+  YAHOO.init.local();
 };
 
 YAHOO.init.upgradeCheck = function(success_callback, failure_callback) {

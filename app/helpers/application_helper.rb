@@ -32,6 +32,5 @@ module ApplicationHelper
       link_to(text, view, {:id => view_id, :class => "p"})
     end
   end
-  
 end
 

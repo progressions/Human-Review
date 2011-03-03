@@ -10,3 +10,7 @@ Launcher.launchRemove = function() {
 Launcher.launchPrivacy = function() {
   Launcher.launchTab("privacy", "Privacy");
 };
+
+Launcher.launchFaq = function() {
+  Launcher.launchTab("faq", "Faq");
+};
