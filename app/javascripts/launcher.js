@@ -6,3 +6,7 @@ Launcher.launchMain = function() {
 Launcher.launchRemove = function() {
   Launcher.launchTab("remove", "Remove");
 };
+
+Launcher.launchPrivacy = function() {
+  Launcher.launchTab("privacy", "Privacy");
+};

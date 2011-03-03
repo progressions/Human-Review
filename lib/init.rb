@@ -1,5 +1,5 @@
 require 'rubygems'
-require 'thread'
+require 'thread' # to fix Mutex bug in REE
 require 'fileutils'
 require 'erb'
 require 'net/http'

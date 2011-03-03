@@ -295,14 +295,11 @@ class CmdLineDispatcher
             $this->dispatchInternal();
         }
         catch(Exception $e){
-
-            $msg = "\n" . $e->getMessage() . "\n\n".
+           $msg = "\n" . $e->getMessage() . "\n\n".
                   "See error.log for more info\n";
-            echo wordwrap($msg, 80, "\n");
+           echo wordwrap($msg, 80, "\n");
             if(self::DEBUG_MODE)
                 throw $e;
-
-            exit(-1);
         }
     }
     
@@ -1218,8 +1215,7 @@ class WebServiceClient
 	}
 	
     function call($op, &$msg, $fields = array(), $format = 'json',
-                  $checkStatus = true, $needLogin = true, $urlXtra = null,
-                  $persistWebServer = false)
+                  $checkStatus = true, $needLogin = true, $urlXtra = null)
     {
         if(!$this->wssid && $needLogin)
             $this->login();
@@ -1285,11 +1281,8 @@ class WebServiceClient
         curl_close($ch);
         if(file_exists($this->cookieFname))
             chmod($this->cookieFname, 0600);
-
+		
 		$webServer = self::extractServerName($result, $header_size);
-
-        if($persistWebServer)
-            $this->hostname = $webServer;
 		
 		self::logServerName($webServer, $op);
 		
@@ -1585,7 +1578,7 @@ class WebServiceClient
 
 
 
-define('CLI_Version', '1.23');
+define('CLI_Version', '1.20');
 
 
 
@@ -1613,7 +1606,6 @@ define('CLI_Version', '1.23');
 */
 class YMDT extends CLI
 {
-    private $compressFlag = null;
     const OPTS___CONSTRUCT = CLI::OPTS___CONSTRUCT;
     public function __construct($hostname = null, $lamessl = false, 
                                 $username = null, $password = null, $proxyOpts = null,
@@ -1734,8 +1726,7 @@ class YMDT extends CLI
         
         $fields = array('name' => $appName);
 
-        verify(($result = $this->ws->call('dev.app.create', $msg, $fields,
-                                            'json', true, true, null, false)),
+        verify(($result = $this->ws->call('dev.app.create', $msg, $fields)),
                "No webservice result.");
 
         verify(file_put_contents($appidFname, $result->id) !== false,
@@ -2314,10 +2305,6 @@ class YMDT extends CLI
 	
 	function compressUtility($path , $key, $flag) 
 	{
-        /*bug 4284254: Need this line for the wierd issue with yphp_cli-5.2.6. 
-          It looses the value of third parameter in array_walk if this line 
-          is not present. */ 
-        $this->compressFlag = $flag;
 		list($appid, $basepath, $subpath) = FileSys::parsePath($path);
 
         $contents = file_get_contents($path);
