@@ -10,3 +10,8 @@ TITLE=Improve the Yahoo! Mail Experience by Joining Yahoo! Labs
 ERROR_P1=There has been an error when adding this Yahoo Mail feature. Please try again. Thank you
 PRIVACY_POLICY=Privacy Policy
 FAQ=FAQ
+
+# 
+# Keys translated automatically on 3/9/2011.
+# 
+YAHOO_LABS=Yahoo! Labs

@@ -10,3 +10,8 @@ TITLE=Melhorar o Yahoo! experiência mail unindo Yahoo! laboratórios
 ERROR_P1=Houve um erro ao adicionar esse recurso yahoo mail. Por favor, tente novamente. obrigado
 PRIVACY_POLICY=Política de privacidade
 FAQ=Faq
+
+# 
+# Keys translated automatically on 3/9/2011.
+# 
+YAHOO_LABS=Error: Translation from 'ENGLISH' to 'pt' isn't supported yet!
