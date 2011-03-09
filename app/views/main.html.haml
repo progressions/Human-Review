@@ -1,13 +1,11 @@
-%h1#main_heading.t Yahoo! Research
-
 #opt_in{:style => "display: none;"}
   .content
-    %p.terms Yahoo! researchers and scientists are instrumental in creating and continually improving Yahoo!’s cutting edge products and services that 100s of millions of people use every day around the world. To be able to do that better, we need your help. Select employees and trusted partners working on Y!'s behalf need to review a small percentage of emails and IMs to research topics like the subjects that are important to users, how users communicate with each other, and how to better personalize products, content, and advertising.
+    %p#terms_p1.t.terms Yahoo! researchers and scientists are instrumental in creating and continually improving Yahoo!’s cutting edge products and services that 100s of millions of people use every day around the world. To be able to do that better, we need your help. Select employees and trusted partners working on Y!'s behalf need to review a small percentage of emails and IMs to research topics like the subjects that are important to users, how users communicate with each other, and how to better personalize products, content, and advertising.
     
-    %p.terms You and your emails and IMs can play a critical role in helping us improve Yahoo! products and services. Simply click on the “I Agree” button below to contribute all emails and IMs you send, receive, and store to this research project. Your contribution to Yahoo! research is greatly appreciated. To learn more about this Yahoo! research project, please click on this FAQ link. You can always stop participating in this Yahoo! research project. Simply go to the “Applications” window in Yahoo! Mail and click on “Human Review”. Follow the instructions and we will stop reviewing your emails and IMs from that date forward and will delete the emails you previously contributed within approximately two weeks. 
+    %p#terms_p2.t.terms You and your emails and IMs can play a critical role in helping us improve Yahoo! products and services. Simply click on the “I Agree” button below to contribute all emails and IMs you send, receive, and store to this research project. Your contribution to Yahoo! research is greatly appreciated. To learn more about this Yahoo! research project, please click on this FAQ link. You can always stop participating in this Yahoo! research project. Simply go to the “Applications” window in Yahoo! Mail and click on “Human Review”. Follow the instructions and we will stop reviewing your emails and IMs from that date forward and will delete the emails you previously contributed within approximately two weeks. 
     
     %p#message_link.btn
-      %a#opt_in_link.send_message{:href => "#"} I Agree
+      %a#opt_in_link.send_message.t{:href => "#"} I Agree
   
     
 #opt_out{:style => "display: none;"}
@@ -17,18 +15,21 @@
       %span#human_review_date Jan 1, 2011. 
     
     %p#message_link.btn
-      %a#opt_out_link.send_message{:href => "#"} Opt Out
+      %a#opt_out_link.send_message.t{:href => "#"} Remove Application
 
 #thank_you_opt_in{:style => "display: none;"}
-  %h1.p thank_you
-  
-  %p#thank_you_opt_in_p1.t Thank you for opting in.
+  %p#thank_you_opt_in_p1.t Thank you for helping to improve the Yahoo! Mail Experience. In the future, if you would like to remove the application, please navigate to the Yahoo! Gallery and click Remove.
 
 #thank_you_opt_out{:style => "display: none;"}
-  %h1.p thank_you
-  
-  %p#thank_you_opt_out_p1.t Thank you for opting out.
+  %p#thank_you_opt_out_p1.t Thank you for your participation. Previous communications that were a part of the research project will now be removed within the next 2 weeks.
 
-#footer
-  %p#copyright.t Copyright &copy; 2011 Yahoo! Inc. All rights reserved. Copyright Policy | Terms of Service | Guide to Online Security.
+#privacy{:style => "display: none;"}
+  %h2#privacy_policy.t Privacy Policy
   
+  %p This will be the privacy policy...
+  
+#faq{:style => "display: none;"}
+  %h2#faq.t FAQ
+  
+  %p This will be the FAQ...
+

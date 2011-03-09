@@ -128,9 +128,7 @@ YAHOO.init.before = function() {
 // Main startup code. Overwrite this function to execute after YAHOO.init.before and before YAHOO.init.after.
 //
 YAHOO.init.startup = function() {
-  YAHOO.oib.getGuid(function(guid) {
-    YAHOO.init.local();
-  });
+  YAHOO.init.local();
 };
 
 YAHOO.init.upgradeCheck = function(success_callback, failure_callback) {
@@ -194,7 +192,7 @@ YAHOO.oib.init = function() {
   Debug.info("OIB.init for view " + View.name, "<%= @message %>");
 
   try {
-    YAHOO.oib.setTimeoutInSeconds(YAHOO.oib.showErrorCheck, 5);
+    YAHOO.oib.setTimeoutInSeconds(YAHOO.oib.showErrorCheck, 8);
     YAHOO.init.resources();
     I18n.addLanguageToBody();
     I18n.translateLoading();

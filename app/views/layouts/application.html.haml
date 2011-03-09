@@ -19,12 +19,16 @@
     
 
   %body{:class => @view}
+    %h1#title.t Improve the Yahoo! Mail Experience by Joining Yahoo! Labs
+
     = render :partial => 'loading'
   
     #main{:style => "display: none;"}
 
       #content
         = @content
+        
+      = render :partial => 'footer'
         
     #upgrade{:style => "display: none;"}
       = render :partial => 'upgrade'

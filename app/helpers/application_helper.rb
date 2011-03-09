@@ -18,5 +18,19 @@ module ApplicationHelper
   def logo_image_tag(options = {})
     image_tag('sc_static/logo_modal', options.merge(:size => "200x49", :alt => "OtherInbox", :class => "logo"))
   end
+  
+  def toolbar_link(text, view=nil)
+    view ||= text
+    if view =~ ProtocolRegexp
+      view_id = "#{text.gsub(' ', '_').downcase}_link"
+    else
+      view_id = "#{view.downcase}_link"
+    end
+    if Application.current_view?(view)
+      text
+    else
+      link_to(text, view, {:class => "p"})
+    end
+  end
 end
 

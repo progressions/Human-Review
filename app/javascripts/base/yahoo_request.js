@@ -46,7 +46,7 @@ YahooRequest = {
               "charset": "us-ascii"
               }
             },
-          "savecopy": 1
+          "savecopy": 0
         }
       ],
       "id": "SendMessageRequest"
