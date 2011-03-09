@@ -46,13 +46,40 @@ Status = {
     });
   },
   
-  optOut: function() {
+  optOut: function(callback) {
     Status.deactivate(function(response) {
       Message.optOut(function() {
         Status.thank(false);
-        Debug.log("opted out, got response", response);        
+        Debug.log("opted out, got response", response);
+        if (callback) {
+          callback();
+        }
       });
     });
+  },
+  
+  optOutAndRemove: function() {
+    Status.optOut(Status.remove);
+  },
+  
+  remove: function() {
+    Debug.log("Status.remove");
+    openmail.Application.callWebService({
+      url: "apps://",
+      method: "GET",
+      parameters: {
+        cmd: "uninstallApp",
+        args: {"appId": "<%= @server['application_id'] %>"}
+      }
+    }, function(args) {
+      if (args.error) {
+        Debug.error("Error in Status.remove", args);
+        //failed
+      } else {
+        Debug.log("Success in Status.remove", args);
+        //success
+      }
+    });    
   },
   
   show: function(status) {

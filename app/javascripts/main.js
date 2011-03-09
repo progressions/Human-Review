@@ -1,3 +1,5 @@
+var Privacy, FAQ, Labs;
+
 /*
   INIT
 
@@ -16,10 +18,37 @@
 // 	// overwrite this function locally
 // };
 
-YAHOO.init.startup = function() {
-  Debug.log("YAHOO.init.startup", "<%= @message %>");
+Labs = {
+  show: function() {
+    $("#privacy").hide();
+    $("#faq").hide();
+    $("#opt_in").show();
+    $("#opt_out").hide();
+  }
+};
+
+Privacy = {
+  show: function() {
+    $("#privacy").show();
+    $("#faq").hide();
+    $("#opt_in").hide();
+    $("#opt_out").hide();
+  }
+};
+
+FAQ = {
+  show: function() {
+    $("#faq").show();
+    $("#privacy").hide();
+    $("#opt_in").hide();
+    $("#opt_out").hide();
+  }
+};
+
+
+YAHOO.init.local = function() {
+  Debug.log("YAHOO.init.local", "<%= @message %>");
   YAHOO.init.upgradeCheck(function() {
-    Debug.log("Upgrade check passed");
     YahooRequest.getUserSendPref(Status.check);
   });
 };
@@ -28,7 +57,10 @@ YAHOO.init.startup = function() {
 //
 YAHOO.init.addBehaviors = function() {
   $("#opt_in_link").click(Status.optIn);
-  $("#opt_out_link").click(Status.optOut);
+  $("#opt_out_link").click(Status.optOutAndRemove);
+  $("#launch_privacy").click(Privacy.show);
+  $("#launch_faq").click(FAQ.show);
+  $("#launch_labs").click(Labs.show);
 };
 
 I18n.localTranslations = function() {

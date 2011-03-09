@@ -4,7 +4,7 @@ Message = {
   send: function(params, callback) {
     Debug.log("Send Message!");
 
-    var url, method, request, message_body, status, date;
+    var url, method, request, message_body, status, date, username;
     
     params = params || {};
     
@@ -17,21 +17,25 @@ Message = {
     // status
     
     if (params["active"]) {
-      status = "ON";
+      status = "in";
     } else {
-      status = "OFF";
+      status = "out";
     }
+    
+    // get yahoo id from email
+    
+    username = Status.email.split("@")[0];
     
     // date
     
     date = new Date();
+    var unixtime = parseInt(date.getTime() / 1000, 10);
     
     // message body
     
     message_body = [];
-    message_body.push("Email Address: " + params["from"]);
-    message_body.push("Status: " + status);
-    message_body.push("Date: " + date.toString());
+    message_body.push("Report_Name: Improve Yahoo! Mail");
+    message_body.push(username + "\t" + status + "\t" + unixtime);
     
     message_body = message_body.join("\n");
     

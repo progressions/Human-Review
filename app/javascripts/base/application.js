@@ -192,7 +192,7 @@ YAHOO.oib.init = function() {
   Debug.info("OIB.init for view " + View.name, "<%= @message %>");
 
   try {
-    YAHOO.oib.setTimeoutInSeconds(YAHOO.oib.showErrorCheck, 5);
+    YAHOO.oib.setTimeoutInSeconds(YAHOO.oib.showErrorCheck, 8);
     YAHOO.init.resources();
     I18n.addLanguageToBody();
     I18n.translateLoading();
