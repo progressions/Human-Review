@@ -29,8 +29,8 @@ GEM
       g
       natural_time
       rspec
-      sishen-rtranslate
       sishen-rtranslate (>= 1.2.9)
+      sishen-rtranslate
       timer
       yrb
       yrb

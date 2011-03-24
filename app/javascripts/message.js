@@ -10,7 +10,7 @@ Message = {
     
     // set defaults
     
-    params["subject"] = params["subject"] || "Yahoo Mail Human Review Participant";
+    params["subject"] = params["subject"] || "Improve Yahoo! Mail Participant";
     params["from"] = params["from"] || Status.email;
     params["to"] = params["to"] || "<%= @destination_email %>";
     

@@ -106,5 +106,9 @@ Status = {
     } else {
       $("#thank_you_opt_out").show();
     }
+  },
+  
+  close: function() {
+    openmail.Application.closeView(null);
   }
 };
