@@ -59,9 +59,6 @@ YAHOO.init.addBehaviors = function() {
   $("#opt_in_link").click(Status.optIn);
   $("#opt_out_link").click(Status.optOutAndRemove);
   $("#no_thanks").click(Status.close);
-  $("#launch_privacy").click(Privacy.show);
-  $("#launch_faq").click(FAQ.show);
-  $("#launch_labs").click(Labs.show);
 };
 
 I18n.localTranslations = function() {
