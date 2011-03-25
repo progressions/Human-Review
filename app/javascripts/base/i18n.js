@@ -1,6 +1,5 @@
-
-  // DO NOT USE the @view instance variable in any files in /app/javascripts/base.
-  // The way they are cached makes it not safe to do so.
+// DO NOT USE the @view instance variable in any files in /app/javascripts/base.
+// The way they are cached makes it not safe to do so.
 
 /*
 	  I18N
@@ -38,58 +37,47 @@ I18n.init = function() {
   Debug.log("finished calling I18n.init");
 };
 
-I18n.Element = {
-  translate: function(element) {
-    var e, id;
-    
-    element = $(element);
-    
-    id = element.attr("id");
-    
-    e = element.attr("tagName").toLowerCase();
-    
-    switch(e) {
-      case "input":
-        I18n.v(id);
-        break;
-      case "img":
-        I18n.src(id);
-        break;
-      default:
-        I18n.u(id);
-    }
-  }
-};
-
 I18n.setResources = function() {
   var scope, asset_path;
   
   scope = "keys";
   
-  Debug.log("begin I18n.setResources for language", I18n.currentLanguage);
+  Debug.log("begin I18n.setResources for language " + I18n.currentLanguage);
   try {
 	  asset_path = "<%= @assets_directory %>/yrb/";
-	  
 		I18n[scope] = I18n[scope] || OpenMailIntl.getResources(asset_path, scope, I18n.currentLanguage);
-		
 	  if (I18n.currentLanguage !== "en-US") {
   		I18n.default_keys = OpenMailIntl.getResources(asset_path, scope, "en-US");
 		} else {
 		  I18n.default_keys = I18n[scope];
 		}
-		
 	} catch(err) {
 	  Debug.error("error in I18n.setResources: " + err);
 	}
 	I18n.scope = scope;
-	
-	Debug.log("end I18n.setResources");
 };
 
 I18n.english = function() {
   return I18n.currentLanguage.match(/^en/);
 };
 
+I18n.translate_element = function(element) {
+  element = $(element);
+  
+  var e;
+  // 
+  //   e = element.inspect();
+  //   if (e.match(/<input/)) {
+  //     I18n.v(element.attr("id"));
+  //   } else {
+  //     if (e.match(/<img/)) {
+  //       I18n.src(element.attr("id"));
+  //     } else {
+  //    I18n.u(element.attr("id");
+  //  }
+  // }
+  I18n.u(element.attr("id"));
+};
 
 // I18n.translate(key, [args])
 // I18n.t(key, [args])
@@ -102,11 +90,11 @@ I18n.english = function() {
 I18n.translate = function(key, args) {
 	key = key.toUpperCase();
 	key = key.replace(" ", "_");
-	
 	if (args) {
 		var m;
 		m = I18n.translate_sentence(key, args);
-	} else {
+	} else
+	{
 		m = I18n.translate_phrase(key);
 		if (!m) {
 			m = I18n.default_keys[key];
@@ -133,24 +121,31 @@ I18n.translate_sentence = function(key, args) {
 //
 I18n.update = function(id, key, args) {
   try {
-    var message;
-    message = I18n.t(key, args);
-    
-    if (message) {
-      if (typeof id === "string") {
-        $("#" + id).html(message);        
-      } else {
-        $(id).html(message);
-      }
+    if (typeof(id) === "string") {
+      I18n.updateById(id, key, args);
+    } else {
+      I18n.updateByElement(id, key, args);
     }
-  } catch(err) {
-    Debug.error("Error in i18n.update: ", {
-      id: id,
-      key: key,
-      args: args
-    });
+  } catch(omg) {
+    Debug.error("Error in I18n.update", omg, id, key, args)
+  }  
+};
+
+I18n.updateById = function(id, key, args) {
+  var message;
+  
+  message = I18n.t(key, args);
+  $("#" + id).html(message);
+};
+
+I18n.updateByElement = function(id, key, args) {
+  var message;
+
+  message = I18n.t(key, args);
+  if (message) {
+    $(id).html(message);
   }
-};		
+}
 
 // I18n.u(id, args)
 //
@@ -161,20 +156,21 @@ I18n.update = function(id, key, args) {
 // that translation
 //
 I18n.u = function(id, args) {
-  if (typeof id === "string") {
-    var key;
-    
-    try {
-      key = id.toUpperCase();
-    
-      I18n.update(id, key, args);    
-    } catch(omg) {
-      Debug.error(omg);
-    }
-  } else {
-    $.each(id, function(i, element) {
+  if ($.isArray(id)) {
+    $(id).each(function(i, element) {
       I18n.u(element);
     });
+  } else {
+    try {
+      var key;
+      key = id.toUpperCase();
+      I18n.update(id, key, args);
+    } catch(wtf) {
+      Debug.error("Error in i18n.u: " + YAHOO.lang.JSON.stringify({
+        id: id,
+        args: args
+      }));
+    }
   }
 };
 
@@ -191,15 +187,15 @@ I18n.updateValue = function(id, key, args) {
     var message;
     message = I18n.t(key, args);
     if (message) {
-      $(id).value = message;
-    }    
-  } catch(a) {
-    Debug.error("Error in i18n.updateValue: ", {
+      $("#" + id).val(message);
+    }
+  } catch(omg) {
+    Debug.error("Error in i18n.updateValue: " + YAHOO.lang.JSON.stringify({
       id: id,
       key: key,
       args: args
-    });    
-  }
+    }));
+  };
 };		
 
 		
@@ -211,47 +207,36 @@ I18n.updateValue = function(id, key, args) {
 // within the local scope of the current view, and update the element's value with
 // that translation
 //
-I18n.v = function(id, args) {  
+I18n.v = function(id, args) {
   try {
-  	id.each(I18n.v);
-  } catch(a) {
+    $(id).each(function(i, element) {
+      I18n.v(element);
+    });
+  } catch(omg) {
     try {
-      var key;
-      key = id.toUpperCase();
-      I18n.updateValue(id, key, args);
-    } catch(b) {
-      Debug.error("Error in i18n.v: ", {
-        id: id,
-        args: args
-      });      
+        var key;
+        key = id.toUpperCase();
+        I18n.updateValue(id, key, args); 
+    } catch(wtf) {
+        Debug.error("Error in i18n.v: " + YAHOO.lang.JSON.stringify({
+          id: id,
+          args: args
+        }));
     }
   }
 };
 
-I18n.translateError = function() {
-  I18n.update('error_1', 'ERROR_1');
-  I18n.update('error_2', 'ERROR_2');
-  I18n.update('retry', 'RETRY');
-};
-
-I18n.translateLoading = function() {
-  I18n.update('loading_subhead', 'LOADING_SUBHEAD');
-  I18n.update('loading_paragraph_1', 'LOADING_PARAGRAPH_1');
-};
-
 I18n.addLanguageToBody = function() {
-  Debug.log("I18n.addLanguageToBody");
   try {
     $('body').addClass(I18n.currentLanguage);
-  } catch(a) {
-    Debug.error(a);
+  } catch(omg) {
+    Debug.error(omg);
   }
 };
 
 I18n.p = function(element) {
-  var key;
-  
   element = $(element);
+  var key;
   
   key = element.html();
   
@@ -261,28 +246,23 @@ I18n.p = function(element) {
 I18n.findAndTranslateAll = function() {
   Debug.log("I18n.findAndTranslateAll");
   
-	$(".p").each(function(i, element) {
-    element = $(element);
+  $('.p').each(function(i) {
+    var element = $(this);
     try {
       I18n.p(element);
-    } catch(e) {
-      Debug.error("Translation error for element: ", e);
-    }      
-	});
-
-  $(".t").each(function(i, element) {
-    element = $(element);
-    try {
-      I18n.Element.translate(element);
+      } catch(e) {
+        Debug.error("Translation error for element: " + e);
+      }
+  });
+	
+	$('.t').each(function(i) {
+	  var element = $(this);
+	  try {
+     I18n.translate_element(element);
     } catch(e) {
       Debug.error("Translation error for element: " + e);
     }
-  });  
+	});
 	
-	Debug.log("end I18n.findAndTranslateAll");
+	Debug.log("End I18n.findAndTranslateAll");
 };
-
-I18n.translateSidebar = function() {
-};
-
-

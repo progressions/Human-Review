@@ -7,24 +7,10 @@ var Debug;
 Debug = {
   on: false,
   console: true,
-  alerts: false, 
   logs: false,
-  ajaxErrors: false,
   
   consoleOn: function() {
     return (typeof window['console'] !== 'undefined' && this.console);
-  },
-  
-  alertsOn: function() {
-    return (Debug.on || Debug.logs);
-  },
-  
-  logsOn: function() {
-    return (Debug.on || Debug.logs);
-  },
-  
-  ajaxErrorsOn: function() {
-    return (Debug.on || Debug.ajaxErrors);
   },
   
   profile: function(name) {
@@ -36,72 +22,87 @@ Debug = {
   profileEnd: function(name) {
     if (this.consoleOn()) {
       console.profileEnd(name);
-    }    
-  },
-  
-  call: function(level, message, obj) {
-    try {
-      message = this.message(message, obj);
-
-      if (Debug.consoleOn()) {
-        console[level](message);
-      }
-      if (Debug.logsOn()) {
-        alert(message);
-      }
-    } catch(e) {
-      if (Debug.consoleOn()) {
-        console[level](e);
-      } else {
-        // alert(e);
-      }
-    }    
-  },
-  
-  log: function(message, obj) {
-    this.call("log", message, obj);
-  },
-  
-  error: function(message, obj) {
-    this.call("error", message, obj);
-  },
-  
-  info: function(message, obj) {
-    this.call("info", message, obj);
-  },
-  
-  warn: function(message, obj) {
-    this.call("warn", message, obj);
-  },
-  
-  alert: this.log,
-  
-  message: function(message, obj) {
-    try {
-      message = this.timestamp() + " " + this.generalInfo() + " " + message;    
-      if (obj) {
-        message = message + ", " + YAHOO.lang.JSON.stringify(obj);
-      }
-    } catch(e) {
-      // alert(e);
     }
+  },
+  
+  call: function() {
+    var level, message;
+    var args = [].slice.call(arguments,0);
+    level = args.shift();
+    
+    message = this.message.apply(Debug, args);
+
+    if (this.consoleOn()) {
+      console[level](message);
+    }
+  },
+  
+  info: function() {
+    var args = [].slice.call(arguments,0);
+    args.unshift("log");
+    this.call.apply(this, args);
+  },
+  
+  log: function() {
+    var args = [].slice.call(arguments,0);
+    args.unshift("log");
+    this.call.apply(this, args);
+  },
+  
+  error: function() {
+    var args = [].slice.call(arguments,0);
+    args.unshift("log");
+    this.call.apply(this, args);
+  },
+  
+  message: function() {
+    var parts, message;
+    parts = [];
+    
+    parts.push(this.timestamp());
+    parts.push(this.generalInfo());
+    
+    var args = [].slice.call(arguments,0);
+    
+    $(args).each(function(i, arg) {
+      parts.push(Debug.object(arg));
+    });
+    
+    message = parts.join(" ");
+    
     return message;
   },
   
-  timestamp: function() {
-    var time, year, month, date, hour, minute, second, timestamp, checktime;
+  object: function(obj) {
+    if (typeof obj === "string") {
+      return obj;
+    } else if (obj === undefined) {
+      return "undefined";
+    } else if (obj === null) {
+      return "null";
+    } else if (obj.inspect) {
+      return(obj.inspect());
+    } else {
+      return(YAHOO.lang.JSON.stringify(obj));
+    }
+  },
     
-    checktime = function checkTime(i) {
-      if (i<10) {
-        i="0" + i;
-      }
-      return i;
-    };
+  checktime: function(i) {
+    if (i<10) {
+      i="0" + i;
+    }
+    return i;
+  },
+  
+  timestamp: function() {
+    var time, hour, minute, second, timestamp, checktime;
     
     time = new Date();
-    hour = checktime(time.getHours());
-    minute = checktime(time.getMinutes());
-    second = checktime(time.getSeconds());
+    hour = this.checktime(time.getHours());
+    minute = this.checktime(time.getMinutes());
+    second = this.checktime(time.getSeconds());
+    
+    // timestamp = month + "/" + date + "/" + year + " " + 
     
     timestamp = hour + ":" + minute + ":" + second;
     
@@ -109,8 +110,6 @@ Debug = {
   },
   
   generalInfo: function() {
-    return "[<%= @domain %>/<%= @server %>] [<%= @version %> <%= @sprint_name %>]";
+    return "[<%= @version %> <%= @sprint_name %>]";
   }
 };
-
-Debug.console = true;

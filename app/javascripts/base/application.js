@@ -195,8 +195,6 @@ YAHOO.oib.init = function() {
     YAHOO.oib.setTimeoutInSeconds(YAHOO.oib.showErrorCheck, 8);
     YAHOO.init.resources();
     I18n.addLanguageToBody();
-    I18n.translateLoading();
-    I18n.translateError();
     YAHOO.init.before();
     Debug.info("About to do init.startup");
     YAHOO.init.startup();
