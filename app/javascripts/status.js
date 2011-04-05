@@ -91,7 +91,21 @@ Status = {
     if (active) {
       $("#opt_in").hide();
       $("#opt_out").show();
-      $("#human_review_date").html(date.toString());
+      
+      Debug.log("About to set format of date", typeof(date));
+      try {
+        // mm/dd/yyy, hh:mm:ss AM/PM
+        var new_date = new Date(date);
+        Debug.log("typeof new date", typeof(new_date));
+        
+        date = new_date.format("mm/dd/yy, hh:mm:ss TT");
+        Debug.log("set format of date", date);
+      } catch(omg) {
+        Debug.log(omg);
+        date = date.toString();
+      }
+      
+      $("#human_review_date").html(date);
     } else {
       $("#opt_in").show();
       $("#opt_out").hide();
