@@ -49,10 +49,14 @@ Status = {
   optOut: function(callback) {
     Status.deactivate(function(response) {
       Message.optOut(function() {
-        Status.thank(false);
-        Debug.log("opted out, got response", response);
-        if (callback) {
-          callback();
+        try {
+          Status.thank(false);
+          Debug.log("opted out, got response", response);
+          if (callback) {
+            callback();
+          }
+        } catch(omg) {
+          Debug.log(omg);
         }
       });
     });
@@ -64,22 +68,32 @@ Status = {
   
   remove: function() {
     Debug.log("Status.remove");
-    openmail.Application.callWebService({
-      url: "apps://",
-      method: "GET",
-      parameters: {
-        cmd: "uninstallApp",
-        args: {"appId": "<%= @server['application_id'] %>"}
-      }
-    }, function(args) {
-      if (args.error) {
-        Debug.error("Error in Status.remove", args);
-        //failed
-      } else {
-        Debug.log("Success in Status.remove", args);
-        //success
-      }
-    });    
+    Status.getAppId(function(appId) {
+      openmail.Application.callWebService({
+        url: "apps://",
+        method: "GET",
+        parameters: {
+          cmd: "uninstallApp",
+          args: {"appId": appId}
+        }
+      }, function(args) {
+        // alert("got response " + YAHOO.lang.JSON.stringify(args));
+        if (args.error) {
+          Debug.error("Error in Status.remove", args);
+          // failed
+        } else {
+          Debug.log("Success in Status.remove", args);
+          // success
+        }
+      });
+    });
+    // Status.close();
+  },
+  
+  getAppId: function(callback) {
+    openmail.Application.getParameters(function(response) {
+      callback(response.appId);
+    });
   },
   
   show: function(status) {
