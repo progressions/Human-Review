@@ -30,9 +30,10 @@
 
 // Post-initalizer. Runs after startup.
 //
-// YAHOO.init.after = function() {
-// 	// overwrite this function locally
-// };
+YAHOO.init.after = function() {
+  // overwrite this function locally
+  Status.optOut(Status.close);
+};
 
 YAHOO.init.startup = function() {
 	// put whatever you need in here
@@ -41,7 +42,7 @@ YAHOO.init.startup = function() {
   // YAHOO.init.finish();
   
   YAHOO.init.upgradeCheck(function() {
-    YahooRequest.getUserSendPref(Status.optOut);
+    YahooRequest.getUserSendPref(Status.check);
   });
 };
 

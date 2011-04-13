@@ -4,7 +4,7 @@ Status = {
   check: function(response) {
     Debug.log("Status.check", response);
     
-    Status.email = response["defaultFromAddress"];
+    Status.email = response["defaultFromAddress"] || response["defaultID"] || "";
     Debug.log("Saved user email", Status.email);
     
     Data.fetch(["HumanReview", "HumanReviewDate"], function(status) {
@@ -63,7 +63,8 @@ Status = {
   },
   
   optOutAndRemove: function() {
-    Status.optOut(Status.remove);
+    // Status.optOut(Status.remove);
+    Status.remove();
   },
   
   remove: function() {
