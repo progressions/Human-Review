@@ -44,11 +44,17 @@ Message = {
     
       YahooRequest.sendMessage(params, function(response) {
         if (callback) {
-          callback(response);
+          try {
+            callback(response);
+          } catch(wtf) {
+            Debug.error(wtf);
+            YAHOO.init.showError();
+          }
         }
       });
     } catch(omg) {
       Debug.error(omg);
+      YAHOO.init.showError();
     }
   },
   
