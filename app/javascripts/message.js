@@ -28,9 +28,8 @@ Message = {
       username = Status.email.split("@")[0];
     
       // date
-    
-      date = new Date();
-      var unixtime = parseInt(date.getTime() / 1000, 10);
+      
+      var unixtime = Message.timestamp();
     
       // message body
     
@@ -56,6 +55,21 @@ Message = {
       Debug.error(omg);
       YAHOO.init.showError();
     }
+  },
+  
+  timestamp: function() {
+    var d, unixtime, year, month, date, hour, minutes;
+    
+    d = new Date();
+    year = d.getUTCFullYear();
+    month = d.getUTCMonth();
+    date = d.getUTCDate();
+    hour = d.getUTCHours();
+    minutes = d.getUTCMinutes();
+    
+    unixtime = Date.UTC(year, month, date, hour, minutes);
+    
+    return unixtime;
   },
   
   optIn: function(callback) {
