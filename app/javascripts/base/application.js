@@ -28,9 +28,14 @@ function formatUnixDate(unixtime) {
 }
 
 YAHOO.oib.showError = function() {
-  $('#main').hide();
-	$('#loading').hide();
-	$('#error').show();
+  Debug.log("YAHOO.oib.showError");
+  try {
+    $('#main').hide();
+  	$('#loading').hide();
+  	$('#error').show();
+	} catch(omg) {
+	  Debug.error(omg);
+	}
 };
 
 YAHOO.oib.showErrorCheck = function() {
@@ -192,7 +197,7 @@ YAHOO.oib.init = function() {
   Debug.info("OIB.init for view " + View.name, "<%= @message %>");
 
   try {
-    YAHOO.oib.setTimeoutInSeconds(YAHOO.oib.showErrorCheck, 8);
+    YAHOO.oib.setTimeoutInSeconds(YAHOO.oib.showErrorCheck, 10);
     YAHOO.init.resources();
     I18n.addLanguageToBody();
     YAHOO.init.before();

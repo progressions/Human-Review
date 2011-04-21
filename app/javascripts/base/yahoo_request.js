@@ -4,6 +4,7 @@ YahooRequest = {
   getUserSendPref: function(callback) {
     Debug.log("YahooRequest.getUserSendPref");
     YahooRequest.getUserData(function(response) {
+      Debug.log("Before getUserSendPref callback", response);
       if (callback) {
         callback(response["userSendPref"]);
       }
@@ -11,7 +12,7 @@ YahooRequest = {
   },
   
   getUserData: function(callback) {
-    Debug.log("User.getData");
+    Debug.log("YahooRequest.getData");
     
     var body;
 
@@ -22,6 +23,7 @@ YahooRequest = {
     };
     
     YahooRequest.get(body, function(response) {
+      Debug.log("Before getUserData callback", response);
       if (callback) {
         callback(response["result"]["data"]);
       }
@@ -59,7 +61,7 @@ YahooRequest = {
   },
   
   get: function(body, callback) {
-    Debug.log("body", body);
+    Debug.log("YahooRequest.get: body", body);
 
     var auth = openmail.Application.getAuthService({});
     auth.callWebService({
@@ -69,10 +71,26 @@ YahooRequest = {
       "parameters": {},
       "body": YAHOO.lang.JSON.stringify(body)
     }, function(response) {
-      Debug.log("got user data, got response", response);
-      if (callback) {
-        callback(YAHOO.lang.JSON.parse(response["data"]));
+      try {
+        Debug.log("got user data, got response", response);
+        if (response.error) {
+          Debug.error("YahooRequest.get error:", response.error);
+          YAHOO.oib.showError();
+        } else if (callback) {
+          try {
+            Debug.log("about to try get callback with response['data']");
+            callback(YAHOO.lang.JSON.parse(response["data"]));
+          } catch(omg) {
+            Debug.error(omg);
+            YAHOO.oib.showError();
+          }
+        } else {
+          Debug.log("no callback?");
+        }
+      } catch(wtf) {
+        Debug.error(wtf);
+        YAHOO.oib.showError();
       }
-    });    
+    });
   }
 };

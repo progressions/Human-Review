@@ -38,17 +38,38 @@ Status = {
   },
   
   optIn: function() {
-    Status.activate(function(response) {
-      Message.optIn(function() {
+    // Status.activate(function(response) {
+    //   Message.optIn(function() {
+    //     Status.thank(true);
+    //     Debug.log("opted in, got response", response);        
+    //   });
+    // });
+    // 
+    Message.optIn(function() {
+      Status.activate(function(response) {
         Status.thank(true);
-        Debug.log("opted in, got response", response);        
+        Debug.log("opted in, got response", response);
       });
     });
   },
   
   optOut: function(callback) {
-    Status.deactivate(function(response) {
-      Message.optOut(function() {
+    // Status.deactivate(function(response) {
+    //   Message.optOut(function() {
+    //     try {
+    //       Status.thank(false);
+    //       Debug.log("opted out, got response", response);
+    //       if (callback) {
+    //         callback();
+    //       }
+    //     } catch(omg) {
+    //       Debug.log(omg);
+    //     }
+    //   });
+    // });
+    
+    Message.optOut(function() {
+      Status.deactivate(function(response) {
         try {
           Status.thank(false);
           Debug.log("opted out, got response", response);
@@ -70,6 +91,8 @@ Status = {
   remove: function() {
     Debug.log("Status.remove");
     Status.getAppId(function(appId) {
+      Debug.log("Inside Status.getAppId callback", appId);
+      
       openmail.Application.callWebService({
         url: "apps://",
         method: "GET",
@@ -78,6 +101,7 @@ Status = {
           args: {"appId": appId}
         }
       }, function(args) {
+        Debug.log("response", args);
         // alert("got response " + YAHOO.lang.JSON.stringify(args));
         if (args.error) {
           Debug.error("Error in Status.remove", args);
@@ -93,6 +117,7 @@ Status = {
   
   getAppId: function(callback) {
     openmail.Application.getParameters(function(response) {
+      Debug.log("getAppId callback:");
       callback(response.appId);
     });
   },

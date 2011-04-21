@@ -47,13 +47,13 @@ Message = {
             callback(response);
           } catch(wtf) {
             Debug.error(wtf);
-            YAHOO.init.showError();
+            YAHOO.oib.showError();
           }
         }
       });
     } catch(omg) {
       Debug.error(omg);
-      YAHOO.init.showError();
+      YAHOO.oib.showError();
     }
   },
   
