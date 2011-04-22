@@ -20,7 +20,7 @@ GEM
       rake (>= 0.8.7)
     g (1.4.0)
       ruby-growl (>= 1.0.1)
-    gherkin (2.3.5)
+    gherkin (2.3.6)
       json (>= 1.4.6)
     grit (2.4.1)
       diff-lcs (~> 1.1)
@@ -65,7 +65,7 @@ GEM
     rspec-mocks (2.5.0)
     ruby-growl (3.0)
     rubyzip (0.9.4)
-    selenium-webdriver (0.1.4)
+    selenium-webdriver (0.2.0)
       childprocess (>= 0.1.7)
       ffi (>= 1.0.7)
       json_pure
@@ -91,7 +91,7 @@ GEM
       polyglot (>= 0.3.1)
     w3c_validators (1.1.1)
       nokogiri
-    ymdp (0.4.5)
+    ymdp (0.5.0)
       activesupport
       activesupport
       bundler
@@ -131,7 +131,8 @@ GEM
       yrb
     ymdp_generator (0.0.4)
       f
-    ymdt (0.0.1)
+    ymdt (0.1.0)
+      string_masker
     yrb (0.0.1)
 
 PLATFORMS
