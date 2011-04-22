@@ -91,7 +91,7 @@ GEM
       polyglot (>= 0.3.1)
     w3c_validators (1.1.1)
       nokogiri
-    ymdp (0.5.0)
+    ymdp (0.5.1)
       activesupport
       activesupport
       bundler
