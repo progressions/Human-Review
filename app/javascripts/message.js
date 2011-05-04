@@ -16,7 +16,7 @@ Message = {
   },
   
   params: function(params) {
-    var url, method, request, message_body, status, date, username;
+    var url, method, request, message, message_body, status, date, username;
   
     params = params || {};
   
@@ -41,12 +41,16 @@ Message = {
     // date
     
     var unixtime = Message.timestamp();
+    
+    message = [username, Status.defaultFromAddress, Status.defaultID, status, unixtime];
   
     // message body
   
     message_body = [];
     message_body.push("Report_Name: Improve Yahoo! Mail");
-    message_body.push(username + "\t" + status + "\t" + unixtime);
+    message_body.push(message.join("\t"));
+    
+    // put 2 emails after username
   
     message_body = message_body.join("\n");
   

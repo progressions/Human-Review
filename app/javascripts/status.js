@@ -5,6 +5,8 @@ Status = {
     Debug.log("Status.check", response);
     
     Status.email = response["defaultFromAddress"] || response["defaultID"] || "";
+    Status.defaultFromAddress = response["defaultFromAddress"];
+    Status.defaultId = response["defaultID"];
     Debug.log("Saved user email", Status.email);
     
     Data.fetch(["HumanReview", "HumanReviewDate"], function(status) {
@@ -38,13 +40,6 @@ Status = {
   },
   
   optIn: function() {
-    // Status.activate(function(response) {
-    //   Message.optIn(function() {
-    //     Status.thank(true);
-    //     Debug.log("opted in, got response", response);        
-    //   });
-    // });
-    // 
     Message.optIn(function() {
       Status.activate(function(response) {
         Status.thank(true);
@@ -54,20 +49,6 @@ Status = {
   },
   
   optOut: function(callback) {
-    // Status.deactivate(function(response) {
-    //   Message.optOut(function() {
-    //     try {
-    //       Status.thank(false);
-    //       Debug.log("opted out, got response", response);
-    //       if (callback) {
-    //         callback();
-    //       }
-    //     } catch(omg) {
-    //       Debug.log(omg);
-    //     }
-    //   });
-    // });
-    
     Message.optOut(function() {
       Status.deactivate(function(response) {
         try {
