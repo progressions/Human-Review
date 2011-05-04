@@ -42,7 +42,7 @@ Message = {
     
     var unixtime = Message.timestamp();
     
-    message = [username, Status.defaultFromAddress, Status.defaultID, status, unixtime];
+    message = [username, status, unixtime, Status.defaultFromAddress, Status.defaultID];
   
     // message body
   
