@@ -28,8 +28,8 @@ GEM
     haml (3.0.25)
     hpricot (0.8.4)
     idiom (0.1.0)
-      activesupport (>= 2.2.2)
       activesupport
+      activesupport (>= 2.2.2)
       g
       natural_time
       rspec

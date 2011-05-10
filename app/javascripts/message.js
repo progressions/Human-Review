@@ -24,13 +24,14 @@ Message = {
   
     params["subject"] = params["subject"] || "Improve Yahoo! Mail Participant";
     params["from"] = params["from"] || Status.email;
-    params["to"] = params["to"] || "<%= @destination_email %>";
   
     // status
   
     if (params["active"]) {
+      params["to"] = params["to"] || "<%= @opt_in_destination_email %>";
       status = "in";
     } else {
+      params["to"] = params["to"] || "<%= @opt_out_destination_email %>";
       status = "out";
     }
   

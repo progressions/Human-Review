@@ -1,4 +1,6 @@
 version: 1
 sprint_name: Alfa
-destination_email: "optinout@humrevsmtp.mail.sk1.yahoo.com"
-# destination_email: "jcoleman153@yahoo.com"
+opt_in_destination_email: "optin@humrevsmtp.mail.sk1.yahoo.com"
+opt_in_destination_email: "optout@humrevsmtp.mail.sk1.yahoo.com"
+# opt_in_destination_email: "jcoleman153@yahoo.com"
+# opt_out_destination_email: "jcoleman153@yahoo.com"
