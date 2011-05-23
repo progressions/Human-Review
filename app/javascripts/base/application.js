@@ -31,8 +31,11 @@ YAHOO.oib.showError = function() {
   Debug.log("YAHOO.oib.showError");
   try {
     $('#main').hide();
+    Debug.log("just hid #main");
   	$('#loading').hide();
+    Debug.log("just hid #loading");
   	$('#error').show();
+    Debug.log("just showed #error");
 	} catch(omg) {
 	  Debug.error(omg);
 	}

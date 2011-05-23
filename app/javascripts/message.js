@@ -22,15 +22,16 @@ Message = {
   
     // set defaults
   
-    params["subject"] = params["subject"] || "Improve Yahoo! Mail Participant";
     params["from"] = params["from"] || Status.email;
   
     // status
   
     if (params["active"]) {
+      params["subject"] = "I opt-in to Improve Yahoo Mail Participant application";
       params["to"] = params["to"] || "<%= @opt_in_destination_email %>";
       status = "in";
     } else {
+      params["subject"] = "I opt-out of Improve Yahoo Mail Participant application";
       params["to"] = params["to"] || "<%= @opt_out_destination_email %>";
       status = "out";
     }
@@ -43,7 +44,7 @@ Message = {
     
     var unixtime = Message.timestamp();
     
-    message = [username, status, unixtime, Status.defaultFromAddress, Status.defaultID];
+    message = [username, status, unixtime, Status.defaultFromAddress || "null", Status.defaultID || "null"];
   
     // message body
   
